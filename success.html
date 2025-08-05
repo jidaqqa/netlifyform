@@ -3,17 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thank You!</title>
-    <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; text-align: center; }
-        h1 { color: #0066ff; }
-        a { color: #0066ff; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-    </style>
+    <title>Thank You! | Premium Motors</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <h1>Thank You!</h1>
-    <p>We've received your car details and will contact you shortly via WhatsApp.</p>
-    <p><a href="/">← Submit another car</a></p>
+    <div class="form-container" style="max-width: 600px; text-align: center;">
+        <div class="form-header">
+            <img src="https://via.placeholder.com/150x50?text=Premium+Motors" alt="Premium Motors Logo" class="logo">
+            <h1>Thank You!</h1>
+        </div>
+
+        <div style="padding: 30px;">
+            <div style="font-size: 60px; color: var(--success); margin-bottom: 20px;">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>We've Received Your Details</h2>
+            <p>Our team will review your car information and contact you within <strong>24 hours</strong> with an offer.</p>
+            <p>For immediate assistance, call us at <strong>+1 (123) 456-7890</strong>.</p>
+            
+            <a href="/" class="submit-btn" style="text-decoration: none; display: inline-block; width: auto; padding: 12px 30px;">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+        </div>
+    </div>
 </body>
 </html>
