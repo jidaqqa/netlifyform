@@ -5,21 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sell Your Car</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; line-height: 1.6; }
         .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
-        button { background: #0066ff; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 4px; }
         .required:after { content: " *"; color: red; }
+        input, select, textarea { 
+            width: 100%; 
+            padding: 10px; 
+            border: 1px solid #ddd; 
+            border-radius: 4px; 
+            box-sizing: border-box;
+        }
+        button { 
+            background: #0066ff; 
+            color: white; 
+            border: none; 
+            padding: 12px 20px; 
+            cursor: pointer; 
+            border-radius: 4px; 
+            font-size: 16px;
+        }
+        .hidden { display: none; }
+        .error { color: red; margin-top: 5px; }
     </style>
 </head>
 <body>
     <h1>Sell Your Car</h1>
-    <form name="sell-car" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data">
+    
+    <form name="sell-car" method="POST" data-netlify="true" action="/success.html" netlify-honeypot="bot-field" enctype="multipart/form-data">
+        <!-- Honeypot Field -->
         <p class="hidden">
-            <label>Don't fill this out if you're human: <input name="bot-field"></label>
+            <label>Don't fill this out: <input name="bot-field"></label>
         </p>
         
+        <!-- Form Fields -->
         <div class="form-group">
             <label for="maker" class="required">Car Maker</label>
             <input type="text" id="maker" name="maker" required>
@@ -61,8 +80,9 @@
         </div>
         
         <div class="form-group">
-            <label for="photos" class="required">Upload Photos (max 10MB each)</label>
-            <input type="file" id="photos" name="photos" multiple accept="image/*" required>
+            <label for="photos">Upload Photos (max 10MB each)</label>
+            <input type="file" id="photos" name="photos" multiple accept="image/*">
+            <p><small>You can upload up to 5 photos</small></p>
         </div>
         
         <div class="form-group">
@@ -77,5 +97,33 @@
         
         <button type="submit">Submit</button>
     </form>
+
+    <!-- Fallback JavaScript -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        
+        form.addEventListener('submit', async function(e) {
+            // Basic validation
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = 'red';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+            
+            if (!isValid) {
+                e.preventDefault();
+                alert('Please fill all required fields');
+                return;
+            }
+        });
+    });
+    </script>
 </body>
 </html>
