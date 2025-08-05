@@ -55,8 +55,7 @@ body {
 
 /* ===== Form Sections ===== */
 .form-section {
-    padding: 20px 30px;
-    border-bottom: 1px solid var(--border);
+    padding: 25px 30px; /* More balanced padding */
 }
 
 .form-section:last-child {
@@ -76,13 +75,13 @@ body {
 .form-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 15px;
-    margin-bottom: 10px;
+    gap: 20px; /* Increased gap for better spacing */
+    margin-bottom: 0; /* Removed extra margin */
 }
 
 /* ===== Form Groups ===== */
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px; /* Consistent spacing */
 }
 
 .form-group label {
@@ -98,12 +97,7 @@ body {
 }
 
 input, select, textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    font-size: 16px;
-    transition: border 0.3s;
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
 }
 
 input:focus, select:focus, textarea:focus {
@@ -114,8 +108,9 @@ input:focus, select:focus, textarea:focus {
 
 /* ===== File Upload ===== */
 .file-upload {
-    position: relative;
-    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .file-upload input[type="file"] {
@@ -129,14 +124,8 @@ input:focus, select:focus, textarea:focus {
 }
 
 .upload-btn {
-    display: inline-block;
-    padding: 12px 20px;
-    background: var(--light-gray);
-    border: 1px dashed var(--border);
-    border-radius: 6px;
+    padding: 12px;
     text-align: center;
-    cursor: pointer;
-    transition: all 0.3s;
     width: 100%;
 }
 
@@ -150,10 +139,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 #file-count {
-    display: block;
-    margin-top: 5px;
-    font-size: 14px;
-    color: #666;
+    margin-top: 0; /* Removed extra margin */
 }
 
 /* ===== File Preview ===== */
@@ -207,7 +193,8 @@ input:focus, select:focus, textarea:focus {
     }
     
     .form-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Single column on mobile */
+        gap: 15px;
     }
     
     .submit-btn {
