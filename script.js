@@ -318,18 +318,49 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Show loading state
+        const submitBtn = document.getElementById('submit-btn');
+        const originalBtnText = submitBtn.innerHTML;
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + submitBtn.textContent.trim();
         
-        // Simulate form submission (replace with actual form submission)
-        setTimeout(() => {
-            // If you're using Netlify Forms, the form will be submitted automatically
-            // If you need to handle the submission with JavaScript, uncomment the next line:
-            // form.submit();
-            
-            // For demo purposes, we'll just show a success message
-            console.log('Form submitted successfully!');
-        }, 1500);
+        try {
+            // If we have files to upload, we need to handle the submission with JavaScript
+            if (fileInput.files.length > 0) {
+                const formData = new FormData(form);
+                
+                // Append files to the form data
+                Array.from(fileInput.files).forEach((file, index) => {
+                    formData.append(`file${index}`, file);
+                });
+                
+                // Submit the form data to Netlify
+                fetch('/', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Redirect to success page on successful submission
+                        window.location.href = '/success.html';
+                    } else {
+                        throw new Error('Form submission failed');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('There was an error submitting the form. Please try again.');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnText;
+                });
+            } else {
+                // If no files, let Netlify handle the form submission normally
+                form.submit();
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            // Fallback to default form submission if JavaScript fails
+            form.submit();
+        }
     }
 
     // Drag and drop helpers
