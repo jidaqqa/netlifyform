@@ -12,7 +12,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="https://via.placeholder.com/32x32/1a237e/ffffff?text=PM">
     <!-- i18next -->
     <script src="https://unpkg.com/i18next@21.8.2/dist/umd/i18next.min.js"></script>
     <script src="https://unpkg.com/i18next-browser-languagedetector@6.1.3/i18nextBrowserLanguageDetector.min.js"></script>
@@ -136,12 +135,14 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="mileage" class="required" data-i18n="form.fields.mileage">Mileage</label>
+                        <label for="mileage" class="required">
+                            <span data-i18n="form.fields.mileage">Mileage</span> (km)
+                        </label>
                         <div class="input-with-icon">
                             <i class="fas fa-tachometer-alt"></i>
                             <input type="number" id="mileage" name="mileage" placeholder="e.g., 50000" min="0" max="1000000" step="1000" required>
                         </div>
-                        <div class="hint">Current odometer reading</div>
+                        <div class="hint" data-i18n="form.fields.mileageHint">Current odometer reading</div>
                     </div>
 
                     <div class="form-group">
@@ -340,6 +341,7 @@
                     'form.fields.model': 'Model',
                     'form.fields.year': 'Year',
                     'form.fields.mileage': 'Mileage',
+                    'form.fields.mileageHint': 'Current odometer reading',
                     'form.fields.condition': 'Condition',
                     'form.fields.transmission': 'Transmission',
                     'form.fields.fuel': 'Fuel Type',
@@ -400,6 +402,7 @@
                     'form.fields.model': 'Modèle',
                     'form.fields.year': 'Année',
                     'form.fields.mileage': 'Kilométrage',
+                    'form.fields.mileageHint': 'Kilométrage actuel',
                     'form.fields.condition': 'État',
                     'form.fields.transmission': 'Boîte de vitesses',
                     'form.fields.fuel': 'Type de carburant',
@@ -460,6 +463,7 @@
                     'form.fields.model': 'Model',
                     'form.fields.year': 'Bouwjaar',
                     'form.fields.mileage': 'Kilometerstand',
+                    'form.fields.mileageHint': 'Huidige kilometerstand',
                     'form.fields.condition': 'Staat',
                     'form.fields.transmission': 'Versnellingsbak',
                     'form.fields.fuel': 'Brandstoftype',
