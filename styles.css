@@ -94,6 +94,66 @@ body {
     border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
+/* Logo Styles */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0 10px;
+    text-align: center;
+}
+
+.logo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: white;
+    gap: 15px;
+}
+
+.logo i {
+    font-size: 3.5rem;
+    color: var(--accent);
+    transition: transform 0.3s ease;
+}
+
+.logo:hover i {
+    transform: scale(1.1);
+}
+
+.logo-text {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    font-family: var(--font-primary);
+    line-height: 1.2;
+}
+
+.trust-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    width: fit-content;
+}
+
+.trust-badge i {
+    margin-right: 8px;
+    color: var(--accent);
+    font-size: 1rem;
+}
+
 /* Form Header */
 .form-header {
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
@@ -102,6 +162,7 @@ body {
     position: relative;
     overflow: hidden;
     text-align: center;
+    margin-bottom: var(--spacing-xl);
 }
 
 .form-header::before {

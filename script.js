@@ -3,10 +3,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('form');
     const fileInput = document.getElementById('photos');
     const preview = document.getElementById('preview');
+    const fileList = document.getElementById('file-list');
+    const noFilesMsg = fileList ? fileList.querySelector('.no-files') : null;
+    const dropZone = document.querySelector('.file-upload');
     const submitBtn = document.querySelector('.submit-btn');
     const languageSelector = document.getElementById('language-selector');
     const selectedFlag = document.querySelector('.selected-flag');
     let filesArray = [];
+    
+    // Check if required elements exist
+    if (!fileInput || !preview || !fileList || !dropZone) {
+        console.error('Required elements for file upload not found');
+        return;
+    }
     
     // Initialize language selector
     if (languageSelector && selectedFlag) {
@@ -38,7 +47,6 @@ document.addEventListener('DOMContentLoaded', function() {
     fileInput.addEventListener('change', handleFileSelect);
     
     // Drag and drop functionality
-    const dropZone = document.querySelector('.file-upload');
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
         dropZone.addEventListener(eventName, preventDefaults, false);
     });
@@ -55,6 +63,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Form submission
     form.addEventListener('submit', handleFormSubmit);
+    
+    // Remove any next button click handlers since we're using a direct submit button now
+    const nextBtn = document.getElementById('next-btn');
+    if (nextBtn) {
+        const newNextBtn = nextBtn.cloneNode(true);
+        nextBtn.parentNode.replaceChild(newNextBtn, nextBtn);
+    }
 
     // Initialize tooltips and other UI elements
     initTooltips();
@@ -120,64 +135,163 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle file selection
     function handleFileSelect(e) {
-        const files = e.target.files;
-        updateFileList(files);
+        const newFiles = e.target.files;
+        if (newFiles && newFiles.length > 0) {
+            // Create a new array combining existing files with new ones
+            const updatedFiles = Array.from(filesArray);
+            
+            // Add new files, checking for duplicates
+            Array.from(newFiles).forEach(newFile => {
+                // Check if file already exists by name and size
+                const isDuplicate = filesArray.some(
+                    existingFile => 
+                        existingFile.name === newFile.name && 
+                        existingFile.size === newFile.size &&
+                        existingFile.lastModified === newFile.lastModified
+                );
+                
+                if (!isDuplicate) {
+                    updatedFiles.push(newFile);
+                }
+            });
+            
+            // Update the file input with all files
+            const dataTransfer = new DataTransfer();
+            updatedFiles.forEach(file => dataTransfer.items.add(file));
+            fileInput.files = dataTransfer.files;
+            
+            // Update the UI with all files
+            updateFileList(updatedFiles);
+        }
     }
 
     // Handle file drop
     function handleDrop(e) {
+        e.preventDefault();
         const dt = e.dataTransfer;
-        const files = dt.files;
-        fileInput.files = files;
-        updateFileList(files);
+        const newFiles = dt.files;
+        if (newFiles && newFiles.length > 0) {
+            // Create a new array combining existing files with new ones
+            const updatedFiles = Array.from(filesArray);
+            
+            // Add new files, checking for duplicates
+            Array.from(newFiles).forEach(newFile => {
+                // Check if file already exists by name and size
+                const isDuplicate = filesArray.some(
+                    existingFile => 
+                        existingFile.name === newFile.name && 
+                        existingFile.size === newFile.size &&
+                        existingFile.lastModified === newFile.lastModified
+                );
+                
+                if (!isDuplicate) {
+                    updatedFiles.push(newFile);
+                }
+            });
+            
+            // Update the file input with all files
+            const dataTransfer = new DataTransfer();
+            updatedFiles.forEach(file => dataTransfer.items.add(file));
+            fileInput.files = dataTransfer.files;
+            
+            // Update the UI with all files
+            updateFileList(updatedFiles);
+        }
     }
 
     // Update file list and preview
     function updateFileList(files) {
-        filesArray = Array.from(files);
+        if (!files || files.length === 0) return;
         
-        // Update file count
-        fileCount.textContent = filesArray.length > 0 
-            ? `${filesArray.length} file${filesArray.length > 1 ? 's' : ''} selected` 
-            : 'No files selected';
+        // Convert to array and filter for images only
+        filesArray = Array.from(files).filter(file => file.type.match('image.*'));
+        
+        console.log('Updating file list with', filesArray.length, 'images');
+        
+        // Update file count and no-files message
+        if (filesArray.length > 0) {
+            fileList.classList.remove('empty');
+            if (noFilesMsg) noFilesMsg.style.display = 'none';
+        } else {
+            fileList.classList.add('empty');
+            if (noFilesMsg) noFilesMsg.style.display = 'block';
+        }
         
         // Update preview
         preview.innerHTML = '';
         
-        filesArray.forEach((file, index) => {
-            if (!file.type.match('image.*')) return;
+        // Process each file
+        const processFile = (file, index) => {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'preview-item';
+                    previewItem.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview">
+                        <button type="button" class="remove-btn" data-index="${index}" aria-label="Remove image">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    preview.appendChild(previewItem);
+                    
+                    // Add remove button functionality
+                    const removeBtn = previewItem.querySelector('.remove-btn');
+                    removeBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        removeFile(index);
+                    });
+                    
+                    resolve();
+                };
+                reader.onerror = (error) => {
+                    console.error('Error reading file:', error);
+                    resolve();
+                };
+                reader.readAsDataURL(file);
+            });
+        };
+        
+        // Process all files sequentially to avoid overwhelming the browser
+        const processAllFiles = async () => {
+            for (let i = 0; i < filesArray.length; i++) {
+                await processFile(filesArray[i], i);
+            }
             
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const previewItem = document.createElement('div');
-                previewItem.className = 'preview-item';
-                previewItem.innerHTML = `
-                    <img src="${e.target.result}" alt="Preview">
-                    <button type="button" class="remove-btn" data-index="${index}" aria-label="Remove image">
-                        <i class="fas fa-times"></i>
-                    </button>
-                `;
-                preview.appendChild(previewItem);
-                
-                // Add remove button functionality
-                const removeBtn = previewItem.querySelector('.remove-btn');
-                removeBtn.addEventListener('click', () => removeFile(index));
-            };
-            reader.readAsDataURL(file);
-        });
+            // Update the file input with the filtered files
+            const dataTransfer = new DataTransfer();
+            filesArray.forEach(file => dataTransfer.items.add(file));
+            fileInput.files = dataTransfer.files;
+            
+            console.log('File list updated with', filesArray.length, 'images');
+        };
+        
+        processAllFiles();
     }
 
     // Remove file from selection
     function removeFile(index) {
-        filesArray.splice(index, 1);
-        
-        // Update the file input
-        const dataTransfer = new DataTransfer();
-        filesArray.forEach(file => dataTransfer.items.add(file));
-        fileInput.files = dataTransfer.files;
-        
-        // Update the UI
-        updateFileList(fileInput.files);
+        if (index >= 0 && index < filesArray.length) {
+            // Remove the file from our array
+            filesArray.splice(index, 1);
+            
+            // Update the file input
+            const dataTransfer = new DataTransfer();
+            filesArray.forEach(file => dataTransfer.items.add(file));
+            fileInput.files = dataTransfer.files;
+            
+            // If no files left, reset the input to allow reselecting the same file
+            if (filesArray.length === 0) {
+                fileInput.value = ''; // This allows reselecting the same file
+                if (noFilesMsg) noFilesMsg.style.display = 'block';
+                if (fileList) fileList.classList.add('empty');
+                preview.innerHTML = '';
+            } else {
+                // Update the UI with remaining files
+                updateFileList(filesArray);
+            }
+        }
     }
 
     // Handle form submission
@@ -225,17 +339,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function highlight() {
-        dropZone.classList.add('drag-over');
+        if (dropZone) dropZone.classList.add('highlight');
     }
 
     function unhighlight() {
-        dropZone.classList.remove('drag-over');
+        if (dropZone) dropZone.classList.remove('highlight');
     }
 
     // Initialize tooltips
     function initTooltips() {
         // Add any tooltip initialization code here
-        // Example: tippy('[data-tippy-content]');
     }
 
     // Add animation to form sections

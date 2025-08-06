@@ -23,9 +23,15 @@
         <div class="form-header">
             <div class="header-content">
                 <div class="logo-container">
-                    <img src="https://via.placeholder.com/160x50/1a237e/ffffff?text=PREMIUM+MOTORS" alt="Premium Motors Logo" class="logo">
-                    <div class="trust-badges">
-                        <span class="trust-badge"><i class="fas fa-check-circle"></i> <span data-i18n="form.trustBadge">Trusted Dealer</span></span>
+                    <div class="logo-wrapper">
+                        <div class="logo">
+                            <i class="fas fa-car"></i>
+                            <span class="logo-text" data-i18n="form.logo">Premium Motors</span>
+                        </div>
+                        <div class="trust-badge">
+                            <i class="fas fa-check-circle"></i> 
+                            <span data-i18n="form.trustBadge">Trusted Dealer</span>
+                        </div>
                     </div>
                 </div>
                 <h1 data-i18n="form.title">Sell Your Car Fast & Get Paid Instantly</h1>
@@ -204,6 +210,8 @@
                             <p class="no-files" data-i18n="form.fields.noFiles">No files selected</p>
                         </div>
                     </div>
+                    <!-- Preview Container -->
+                    <div id="preview" class="file-preview"></div>
                     <div class="photo-tips">
                         <p><strong data-i18n="form.fields.photoTips">Photo Tips:</strong></p>
                         <ul>
@@ -280,9 +288,7 @@
 
                 </div>
                 <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" id="prev-btn" data-i18n="form.buttons.back">Back</button>
-                    <button type="button" class="btn btn-primary" id="next-btn" data-i18n="form.buttons.next">Next</button>
-                    <button type="submit" class="btn btn-submit" id="submit-btn" style="display: none;" data-i18n="form.buttons.submit">Get My Offer</button>
+                    <button type="submit" class="btn btn-primary" id="submit-btn" data-i18n="form.buttons.submit">Submit</button>
                 </div>
                 
                 <div class="security-notice">
@@ -309,6 +315,10 @@
         const resources = {
             en: {
                 translation: {
+                    // Logo and Header
+                    'form.logo': 'Premium Motors',
+                    'form.tagline': 'Sell Your Car Fast',
+                    
                     // Form title and sections
                     'form.title': 'Sell Your Car Fast & Get Paid Instantly',
                     'form.subtitle': 'Complete our simple form below and receive a competitive offer within minutes. No hidden fees, no obligations.',
@@ -357,9 +367,7 @@
                     'form.fields.notesPlaceholder': 'Tell us about any special features, recent maintenance, or issues with the vehicle...',
                     
                     // Buttons
-                    'form.buttons.back': 'Back',
-                    'form.buttons.next': 'Next',
-                    'form.buttons.submit': 'Get My Offer',
+                    'form.buttons.submit': 'Submit',
                     
                     // Success message
                     'form.success': 'Thank you! Your submission has been received.'
@@ -367,6 +375,10 @@
             },
             fr: {
                 translation: {
+                    // Logo and Header
+                    'form.logo': 'Premium Motors',
+                    'form.tagline': 'Vendez Votre Voiture',
+                    
                     // Form title and sections
                     'form.title': 'Vendez Votre Voiture - Rapide & Facile',
                     'form.subtitle': 'Complétez notre formulaire simple ci-dessous et recevez une offre compétitive en quelques minutes. Pas de frais cachés, pas d\'obligation.',
@@ -415,9 +427,7 @@
                     'form.fields.notesPlaceholder': 'Parlez-nous des caractéristiques spéciales, de l\'entretien récent ou des problèmes du véhicule...',
                     
                     // Buttons
-                    'form.buttons.back': 'Retour',
-                    'form.buttons.next': 'Suivant',
-                    'form.buttons.submit': 'Obtenir mon offre',
+                    'form.buttons.submit': 'Soumettre',
                     
                     // Success message
                     'form.success': 'Merci ! Votre demande a bien été reçue.'
@@ -425,6 +435,10 @@
             },
             nl: {
                 translation: {
+                    // Logo and Header
+                    'form.logo': 'Premium Motors',
+                    'form.tagline': 'Verkoop Uw Auto',
+                    
                     // Form title and sections
                     'form.title': 'Verkoop Uw Auto - Snel & Eenvoudig',
                     'form.subtitle': 'Vul ons eenvoudige formulier in en ontvang binnen enkele minuten een concurrerend aanbod. Geen verborgen kosten, geen verplichtingen.',
@@ -473,9 +487,7 @@
                     'form.fields.notesPlaceholder': 'Vertel ons over speciale functies, recent onderhoud of problemen met het voertuig...',
                     
                     // Buttons
-                    'form.buttons.back': 'Terug',
-                    'form.buttons.next': 'Volgende',
-                    'form.buttons.submit': 'Ontvang mijn aanbod',
+                    'form.buttons.submit': 'Verzenden',
                     
                     // Success message
                     'form.success': 'Bedankt! Uw aanvraag is ontvangen.',
