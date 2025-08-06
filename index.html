@@ -1,22 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Language" content="en">
-    <meta name="description" content="Sell your car quickly and easily with Premium Motors. Get a free, no-obligation valuation and the best price for your vehicle.">
+    <meta name="description"
+        content="Sell your car quickly and easily with Premium Motors. Get a free, no-obligation valuation and the best price for your vehicle.">
     <title data-i18n="form.title">Sell Your Car Fast | Get Top Dollar | Premium Motors</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
     <!-- i18next -->
-    <script src="https://unpkg.com/i18next@21.8.2/dist/umd/i18next.min.js"></script>
-    <script src="https://unpkg.com/i18next-browser-languagedetector@6.1.3/i18nextBrowserLanguageDetector.min.js"></script>
+    <script src="https://unpkg.com/i18next@21.9.1/dist/umd/i18next.min.js"></script>
+    <script
+        src="https://unpkg.com/i18next-browser-languagedetector@6.1.3/i18nextBrowserLanguageDetector.min.js"></script>
     <script src="https://unpkg.com/i18next-http-backend@1.4.5/i18nextHttpBackend.min.js"></script>
+    <script>
+        // Initialize i18next
+        i18next
+            .use(i18nextHttpBackend)
+            .use(i18nextBrowserLanguageDetector)
+            .init({
+                fallbackLng: 'en',
+                debug: false,
+                backend: {
+                    loadPath: 'public/locales/{{lng}}/{{ns}}.json'
+                },
+                interpolation: {
+                    escapeValue: false // Allows HTML in translations
+                }
+            })
+            .then(function () {
+                updateContent();
+
+                // Set up language selector
+                const langSelector = document.getElementById('language-selector');
+                if (langSelector) {
+                    langSelector.value = i18next.language;
+                    langSelector.addEventListener('change', (e) => {
+                        i18next.changeLanguage(e.target.value);
+                    });
+                }
+
+                // Update content when language changes
+                i18next.on('languageChanged', () => {
+                    updateContent();
+                    if (langSelector) langSelector.value = i18next.language;
+                });
+            });
+
+        // Update content with translations
+        function updateContent() {
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (key) {
+                    // Handle nested keys
+                    const keys = key.split('.');
+                    let translation = i18next.t(key);
+
+                    // Handle dynamic attributes
+                    if (element.hasAttribute('data-i18n-phone')) {
+                        translation = translation.replace('{{phone}}', element.getAttribute('data-i18n-phone'));
+                    }
+
+                    element.innerHTML = translation;
+                }
+            });
+
+            // Update placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (key) {
+                    element.placeholder = i18next.t(key);
+                }
+            });
+
+            // Update page title
+            document.title = i18next.t('form.title');
+
+            // Update HTML lang attribute
+            document.documentElement.lang = i18next.language;
+        }
+    </script>
+    <script src="script.js"></script>
 </head>
+
 <body>
     <div class="form-container">
         <div class="form-header">
@@ -28,14 +102,15 @@
                             <span class="logo-text" data-i18n="form.logo">Premium Motors</span>
                         </div>
                         <div class="trust-badge">
-                            <i class="fas fa-check-circle"></i> 
+                            <i class="fas fa-check-circle"></i>
                             <span data-i18n="form.trustBadge">Trusted Dealer</span>
                         </div>
                     </div>
                 </div>
                 <h1 data-i18n="form.title">Sell Your Car Fast & Get Paid Instantly</h1>
-                <p class="header-subtitle" data-i18n="form.subtitle">Complete our simple form below and receive a competitive offer within minutes. No hidden fees, no obligations.</p>
-                
+                <p class="header-subtitle" data-i18n="form.subtitle">Complete our simple form below and receive a
+                    competitive offer within minutes. No hidden fees, no obligations.</p>
+
                 <div class="benefits">
                     <div class="benefit">
                         <i class="fas fa-check-circle"></i>
@@ -53,7 +128,8 @@
             </div>
         </div>
 
-        <form name="sell-car" method="POST" data-netlify="true" action="/success.html" netlify-honeypot="bot-field" enctype="multipart/form-data" novalidate>
+        <form name="sell-car" method="POST" data-netlify="true" action="/success.html" netlify-honeypot="bot-field"
+            enctype="multipart/form-data" novalidate>
             <!-- Honeypot Field -->
             <div class="hidden">
                 <label>Don't fill this out if you're human: <input name="bot-field"></label>
@@ -63,8 +139,9 @@
             <!-- Car Details Section -->
             <div class="form-section">
                 <h2><i class="fas fa-car"></i> <span data-i18n="form.sections.vehicle">Vehicle Information</span></h2>
-                <p class="section-description" data-i18n="form.sections.vehicleDescription">Tell us about your car to get the most accurate valuation.</p>
-                
+                <p class="section-description" data-i18n="form.sections.vehicleDescription">Tell us about your car to
+                    get the most accurate valuation.</p>
+
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="maker" class="required" data-i18n="form.fields.make">Make</label>
@@ -82,13 +159,11 @@
                             <option value="Nissan">Nissan</option>
                             <option value="Other">Other</option>
                         </select>
-                        <div class="hint">Select your car's manufacturer</div>
                     </div>
 
                     <div class="form-group">
                         <label for="model" class="required" data-i18n="form.fields.model">Model</label>
                         <input type="text" id="model" name="model" placeholder="e.g., Camry" required>
-                        <div class="hint">Enter the specific model name</div>
                     </div>
 
                     <div class="form-group">
@@ -140,7 +215,8 @@
                         </label>
                         <div class="input-with-icon">
                             <i class="fas fa-tachometer-alt"></i>
-                            <input type="number" id="mileage" name="mileage" placeholder="e.g., 50000" min="0" max="1000000" step="1000" required>
+                            <input type="number" id="mileage" name="mileage" placeholder="e.g., 50000" min="0"
+                                max="1000000" step="1000" required>
                         </div>
                         <div class="hint" data-i18n="form.fields.mileageHint">Current odometer reading</div>
                     </div>
@@ -157,7 +233,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="transmission" class="required" data-i18n="form.fields.transmission">Transmission</label>
+                        <label for="transmission" class="required"
+                            data-i18n="form.fields.transmission">Transmission</label>
                         <select id="gear" name="gear" required>
                             <option value="">Select</option>
                             <option value="Automatic">Automatic</option>
@@ -186,11 +263,14 @@
 
             <!-- Photos Section -->
             <div class="form-section" id="photos-section">
-                <h2><i class="fas fa-camera"></i> <span data-i18n="form.sections.photos">Upload Photos (Optional)</span></h2>
-                <p class="section-description" data-i18n="form.sections.photosDescription">Add clear photos to help us evaluate your car accurately. Include shots of the exterior, interior, and any damage.</p>
-                
+                <h2><i class="fas fa-camera"></i> <span data-i18n="form.sections.photos">Upload Photos (Optional)</span>
+                </h2>
+                <p class="section-description" data-i18n="form.sections.photosDescription">Add clear photos to help us
+                    evaluate your car accurately. Include shots of the exterior, interior, and any damage.</p>
+
                 <div class="form-group">
-                    <label for="photos" data-i18n="form.fields.photos">Car Images (Optional, Max 10MB each, up to 10 files)</label>
+                    <label for="photos" data-i18n="form.fields.photos">Car Images (Optional, Max 10MB each, up to 10
+                        files)</label>
                     <div class="file-upload" id="drop-zone">
                         <input type="file" id="photos" name="photos[]" multiple accept="image/*">
                         <div class="upload-instructions">
@@ -200,9 +280,11 @@
                                 <span data-i18n="form.fields.browseFiles">or click to browse files</span>
                             </div>
                             <div style="text-align: center; width: 100%;">
-                                <button type="button" class="upload-btn" onclick="document.getElementById('photos').click()">
+                                <button type="button" class="upload-btn"
+                                    onclick="document.getElementById('photos').click()">
                                     <span class="btn-content">
-                                        <i class="fas fa-folder-open"></i> <span data-i18n="form.fields.selectPhotos">Select Photos</span>
+                                        <i class="fas fa-folder-open"></i> <span
+                                            data-i18n="form.fields.selectPhotos">Select Photos</span>
                                     </span>
                                 </button>
                             </div>
@@ -216,11 +298,11 @@
                     <div class="photo-tips">
                         <p><strong data-i18n="form.fields.photoTips">Photo Tips:</strong></p>
                         <ul>
-                            <li data-i18n="form.fields.tips[0]">Take photos in good lighting</li>
-                            <li data-i18n="form.fields.tips[1]">Capture all angles of the car</li>
-                            <li data-i18n="form.fields.tips[2]">Include close-ups of any damage</li>
-                            <li data-i18n="form.fields.tips[3]">Show the interior and dashboard</li>
-                            <li data-i18n="form.fields.tips[4]">Make sure the license plate is visible</li>
+                            <li data-i18n="form.fields.tips.0">Take photos in good lighting</li>
+                            <li data-i18n="form.fields.tips.1">Capture all angles of the car</li>
+                            <li data-i18n="form.fields.tips.2">Include close-ups of any damage</li>
+                            <li data-i18n="form.fields.tips.3">Show the interior and dashboard</li>
+                            <li data-i18n="form.fields.tips.4">Make sure the license plate is visible</li>
                         </ul>
                     </div>
                 </div>
@@ -228,38 +310,43 @@
 
             <!-- Contact Details Section -->
             <div class="form-section">
-                <h2><i class="fas fa-user"></i> <span data-i18n="form.sections.contact">Your Contact Information</span></h2>
-                <p class="section-description" data-i18n="form.sections.contactDescription">We'll use this information to contact you with your offer and arrange the next steps.</p>
-                
+                <h2><i class="fas fa-user"></i> <span data-i18n="form.sections.contact">Your Contact Information</span>
+                </h2>
+                <p class="section-description" data-i18n="form.sections.contactDescription">We'll use this information
+                    to contact you with your offer and arrange the next steps.</p>
+
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="name" class="required">Full Name</label>
                         <div class="input-with-icon">
                             <i class="fas fa-user"></i>
-                            <input type="text" id="name" name="name" data-i18n-placeholder="form.fields.namePlaceholder" placeholder="John Doe" required>
+                            <input type="text" id="name" name="name" data-i18n-placeholder="form.fields.namePlaceholder"
+                                placeholder="John Doe" required>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="phone" class="required">Phone Number</label>
                         <div class="input-with-icon">
                             <i class="fas fa-phone"></i>
-                            <input type="tel" id="phone" name="phone" data-i18n-placeholder="form.fields.phonePlaceholder" placeholder="+1 (555) 123-4567" required>
+                            <input type="tel" id="phone" name="phone"
+                                data-i18n-placeholder="form.fields.phonePlaceholder" placeholder="+1 (555) 123-4567"
+                                required>
                         </div>
-                        <div class="hint">We'll call or text you with your offer</div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="email" class="required">Email Address</label>
                         <div class="input-with-icon">
                             <i class="fas fa-envelope"></i>
-                            <input type="email" id="email" name="email" data-i18n-placeholder="form.fields.emailPlaceholder" placeholder="your.email@example.com" required>
+                            <input type="email" id="email" name="email"
+                                data-i18n-placeholder="form.fields.emailPlaceholder"
+                                placeholder="your.email@example.com" required>
                         </div>
-                        <div class="hint">For important documents and updates</div>
                     </div>
-                    
 
-                    
+
+
                     <div class="form-group">
                         <label data-i18n="form.fields.contactMethod">Preferred Contact Method</label>
                         <div class="radio-group">
@@ -280,18 +367,20 @@
                             </label>
                         </div>
                     </div>
-                    
+
                     <div class="form-group full-width">
                         <label for="notes" data-i18n="form.fields.notes">Additional Notes</label>
-                        <textarea id="notes" name="notes" rows="4" data-i18n-placeholder="form.fields.notesPlaceholder" placeholder="Tell us about any special features, recent maintenance, or issues with the vehicle..."></textarea>
+                        <textarea id="notes" name="notes" rows="4" data-i18n-placeholder="form.fields.notesPlaceholder"
+                            placeholder="Tell us about any special features, recent maintenance, or issues with the vehicle..."></textarea>
                     </div>
-                    
+
 
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary" id="submit-btn" data-i18n="form.buttons.submit">Submit</button>
+                    <button type="submit" class="btn btn-primary" id="submit-btn"
+                        data-i18n="form.buttons.submit">Submit</button>
                 </div>
-                
+
                 <div class="security-notice">
                     <i class="fas fa-lock"></i>
                     <span>Your information is secure and will never be shared with third parties.</span>
@@ -309,325 +398,6 @@
         </select>
         <div class="selected-flag">🇬🇧</div>
     </div>
-
-    <script src="script.js"></script>
-    <script>
-        // Define translations directly in the code
-        const resources = {
-            en: {
-                translation: {
-                    // Logo and Header
-                    'form.logo': 'Premium Motors',
-                    'form.tagline': 'Sell Your Car Fast',
-                    
-                    // Form title and sections
-                    'form.title': 'Sell Your Car Fast & Get Paid Instantly',
-                    'form.subtitle': 'Complete our simple form below and receive a competitive offer within minutes. No hidden fees, no obligations.',
-                    'form.trustBadge': 'Trusted Dealer',
-                    'form.benefits': [
-                        'Get paid same day',
-                        'No hidden fees',
-                        'Free vehicle collection'
-                    ],
-                    'form.sections.vehicle': 'Vehicle Information',
-                    'form.sections.vehicleDescription': 'Tell us about your car to get the most accurate valuation.',
-                    'form.sections.photos': 'Upload Photos (Optional)',
-                    'form.sections.photosDescription': 'Add clear photos to help us evaluate your car accurately. Include shots of the exterior, interior, and any damage.',
-                    'form.sections.contact': 'Your Contact Information',
-                    'form.sections.contactDescription': 'We\'ll use this information to contact you with your offer and arrange the next steps.',
-                    
-                    // Form fields
-                    'form.fields.make': 'Make',
-                    'form.fields.model': 'Model',
-                    'form.fields.year': 'Year',
-                    'form.fields.mileage': 'Mileage',
-                    'form.fields.mileageHint': 'Current odometer reading',
-                    'form.fields.condition': 'Condition',
-                    'form.fields.transmission': 'Transmission',
-                    'form.fields.fuel': 'Fuel Type',
-                    'form.fields.photos': 'Car Images (Optional, Max 10MB each, up to 10 files)',
-                    'form.fields.dragDrop': 'Drag & drop your photos here',
-                    'form.fields.browseFiles': 'or click to browse files',
-                    'form.fields.selectPhotos': 'Select Photos',
-                    'form.fields.noFiles': 'No files selected',
-                    'form.fields.photoTips': 'Photo Tips',
-                    'form.fields.tips': [
-                        'Take photos in good lighting',
-                        'Capture all angles of the car',
-                        'Include close-ups of any damage',
-                        'Show the interior and dashboard',
-                        'Make sure the license plate is visible'
-                    ],
-                    'form.fields.namePlaceholder': 'John Doe',
-                    'form.fields.phonePlaceholder': '+1 (555) 123-4567',
-                    'form.fields.emailPlaceholder': 'your.email@example.com',
-                    'form.fields.contactMethod': 'Preferred Contact Method',
-                    'form.fields.phoneCall': 'Phone Call',
-                    'form.fields.whatsapp': 'WhatsApp',
-                    'form.fields.emailContact': 'Email',
-                    'form.fields.notes': 'Additional Notes',
-                    'form.fields.notesPlaceholder': 'Tell us about any special features, recent maintenance, or issues with the vehicle...',
-                    
-                    // Buttons
-                    'form.buttons.submit': 'Submit',
-                    
-                    // Success message
-                    'form.success': 'Thank you! Your submission has been received.'
-                }
-            },
-            fr: {
-                translation: {
-                    // Logo and Header
-                    'form.logo': 'Premium Motors',
-                    'form.tagline': 'Vendez Votre Voiture',
-                    
-                    // Form title and sections
-                    'form.title': 'Vendez Votre Voiture - Rapide & Facile',
-                    'form.subtitle': 'Complétez notre formulaire simple ci-dessous et recevez une offre compétitive en quelques minutes. Pas de frais cachés, pas d\'obligation.',
-                    'form.trustBadge': 'Vendeur de Confiance',
-                    'form.benefits': [
-                        'Paiement le jour même',
-                        'Pas de frais cachés',
-                        'Enlèvement du véhicule gratuit'
-                    ],
-                    'form.sections.vehicle': 'Informations sur le Véhicule',
-                    'form.sections.vehicleDescription': 'Décrivez votre voiture pour obtenir une évaluation précise.',
-                    'form.sections.photos': 'Télécharger des Photos (Optionnel)',
-                    'form.sections.photosDescription': 'Ajoutez des photos claires pour nous aider à évaluer votre voiture avec précision. Incluez des photos de l\'extérieur, de l\'intérieur et de tout dommage.',
-                    'form.sections.contact': 'Vos Coordonnées',
-                    'form.sections.contactDescription': 'Nous utiliserons ces informations pour vous contacter avec notre offre et organiser les prochaines étapes.',
-                    
-                    // Form fields
-                    'form.fields.make': 'Marque',
-                    'form.fields.model': 'Modèle',
-                    'form.fields.year': 'Année',
-                    'form.fields.mileage': 'Kilométrage',
-                    'form.fields.mileageHint': 'Kilométrage actuel',
-                    'form.fields.condition': 'État',
-                    'form.fields.transmission': 'Boîte de vitesses',
-                    'form.fields.fuel': 'Type de carburant',
-                    'form.fields.photos': 'Images de la voiture (Optionnel, max 10 Mo par fichier, jusqu\'à 10 fichiers)',
-                    'form.fields.dragDrop': 'Glissez et déposez vos photos ici',
-                    'form.fields.browseFiles': 'ou cliquez pour parcourir les fichiers',
-                    'form.fields.selectPhotos': 'Sélectionner des photos',
-                    'form.fields.noFiles': 'Aucun fichier sélectionné',
-                    'form.fields.photoTips': 'Conseils photo',
-                    'form.fields.tips': [
-                        'Prenez des photos avec un bon éclairage',
-                        'Capturez tous les angles de la voiture',
-                        'Incluez des gros plans des dommages éventuels',
-                        'Montrez l\'intérieur et le tableau de bord',
-                        'Assurez-vous que la plaque d\'immatriculation est visible'
-                    ],
-                    'form.fields.namePlaceholder': 'Jean Dupont',
-                    'form.fields.phonePlaceholder': '+33 6 12 34 56 78',
-                    'form.fields.emailPlaceholder': 'votre.email@exemple.com',
-                    'form.fields.contactMethod': 'Méthode de contact préférée',
-                    'form.fields.phoneCall': 'Appel téléphonique',
-                    'form.fields.whatsapp': 'WhatsApp',
-                    'form.fields.emailContact': 'Email',
-                    'form.fields.notes': 'Remarques supplémentaires',
-                    'form.fields.notesPlaceholder': 'Parlez-nous des caractéristiques spéciales, de l\'entretien récent ou des problèmes du véhicule...',
-                    
-                    // Buttons
-                    'form.buttons.submit': 'Soumettre',
-                    
-                    // Success message
-                    'form.success': 'Merci ! Votre demande a bien été reçue.'
-                }
-            },
-            nl: {
-                translation: {
-                    // Logo and Header
-                    'form.logo': 'Premium Motors',
-                    'form.tagline': 'Verkoop Uw Auto',
-                    
-                    // Form title and sections
-                    'form.title': 'Verkoop Uw Auto - Snel & Eenvoudig',
-                    'form.subtitle': 'Vul ons eenvoudige formulier in en ontvang binnen enkele minuten een concurrerend aanbod. Geen verborgen kosten, geen verplichtingen.',
-                    'form.trustBadge': 'Vertrouwde Handelaar',
-                    'form.benefits': [
-                        'Dezelfde dag betaald',
-                        'Geen verborgen kosten',
-                        'Gratis ophalen van uw auto'
-                    ],
-                    'form.sections.vehicle': 'Voertuiginformatie',
-                    'form.sections.vehicleDescription': 'Vertel ons over uw auto voor een nauwkeurige waardering.',
-                    'form.sections.photos': 'Foto\'s Uploaden (Optioneel)',
-                    'form.sections.photosDescription': 'Voeg duidelijke foto\'s toe om ons te helpen uw auto nauwkeurig te beoordelen. Voeg foto\'s toe van de buitenkant, binnenkant en eventuele schade.',
-                    'form.sections.contact': 'Uw Contactgegevens',
-                    'form.sections.contactDescription': 'We gebruiken deze gegevens om contact met u op te nemen over ons aanbod en de volgende stappen te regelen.',
-                    
-                    // Form fields
-                    'form.fields.make': 'Merk',
-                    'form.fields.model': 'Model',
-                    'form.fields.year': 'Bouwjaar',
-                    'form.fields.mileage': 'Kilometerstand',
-                    'form.fields.mileageHint': 'Huidige kilometerstand',
-                    'form.fields.condition': 'Staat',
-                    'form.fields.transmission': 'Versnellingsbak',
-                    'form.fields.fuel': 'Brandstoftype',
-                    'form.fields.photos': 'Auto-afbeeldingen (Optioneel, max 10 MB per bestand, maximaal 10 bestanden)',
-                    'form.fields.dragDrop': 'Sleep uw foto\'s hierheen',
-                    'form.fields.browseFiles': 'of klik om bestanden te doorzoeken',
-                    'form.fields.selectPhotos': 'Foto\'s selecteren',
-                    'form.fields.noFiles': 'Geen bestanden geselecteerd',
-                    'form.fields.photoTips': 'Fototips',
-                    'form.fields.tips': [
-                        'Maak foto\'s bij goed licht',
-                        'Maak foto\'s van alle hoeken van de auto',
-                        'Neem close-ups van eventuele schade op',
-                        'Toon het interieur en het dashboard',
-                        'Zorg ervoor dat de kentekenplaat zichtbaar is'
-                    ],
-                    'form.fields.namePlaceholder': 'Jan Jansen',
-                    'form.fields.phonePlaceholder': '+31 6 12345678',
-                    'form.fields.emailPlaceholder': 'uw.email@voorbeeld.nl',
-                    'form.fields.contactMethod': 'Voorkeurscontactmethode',
-                    'form.fields.phoneCall': 'Telefonisch',
-                    'form.fields.whatsapp': 'WhatsApp',
-                    'form.fields.emailContact': 'E-mail',
-                    'form.fields.notes': 'Aanvullende opmerkingen',
-                    'form.fields.notesPlaceholder': 'Vertel ons over speciale functies, recent onderhoud of problemen met het voertuig...',
-                    
-                    // Buttons
-                    'form.buttons.submit': 'Verzenden',
-                    
-                    // Success message
-                    'form.success': 'Bedankt! Uw aanvraag is ontvangen.',
-                    'form.condition.excellent': 'Uitstekend',
-                    'form.condition.good': 'Goed',
-                    'form.condition.fair': 'Redelijk',
-                    'form.condition.poor': 'Slecht',
-                    'form.transmission': 'Transmissie',
-                    'form.transmission.automatic': 'Automaat',
-                    'form.transmission.manual': 'Handmatig',
-                    // Photo section
-                    'form.photos': 'Foto\'s Uploaden',
-                    'form.photos.drag': 'Sleep uw foto\'s hierheen of klik om te bladeren',
-                    'form.photos.max': 'Maximaal 10 foto\'s (maximaal 5MB per foto)',
-                    // Contact information
-                    'form.contact.name': 'Volledige Naam',
-                    'form.contact.phone': 'Telefoonnummer',
-                    'form.contact.email': 'E-mailadres',
-                    'form.contact.notes': 'Aanvullende Opmerkingen',
-                    // Buttons
-                    'form.button.next': 'Volgende',
-                    'form.button.back': 'Terug',
-                    'form.button.submit': 'Verzenden',
-                    // Success message
-                    'form.success': 'Bedankt! Uw aanmelding is ontvangen.'
-                }
-            }
-        };
-
-        // Initialize i18next with embedded resources
-        i18next
-            .use(i18nextBrowserLanguageDetector)
-            .init({
-                resources,
-                fallbackLng: 'en',
-                debug: false,
-                ns: ['translation'],
-                defaultNS: 'translation',
-                detection: {
-                    order: ['querystring', 'navigator'],
-                    lookupQuerystring: 'lng',
-                    caches: ['localStorage']
-                }
-            })
-            .then(() => {
-                // Update content after initialization
-                updateContent();
-                
-                // Set up language change handler
-                i18next.on('languageChanged', updateContent);
-                
-                // Set up language selector change handler
-                const langSelector = document.getElementById('language-selector');
-                if (langSelector) {
-                    langSelector.addEventListener('change', (e) => {
-                        i18next.changeLanguage(e.target.value);
-                    });
-                }
-            });
-
-        // Update content when language changes
-        function updateContent() {
-            console.log('Updating content for language:', i18next.language);
-            
-            // Update HTML lang attribute
-            document.documentElement.lang = i18next.language;
-            
-            // Update text content
-            document.querySelectorAll('[data-i18n]').forEach(element => {
-                const key = element.getAttribute('data-i18n');
-                if (key) {
-                    let translation;
-                    // Handle array notation like form.benefits[0]
-                    const arrayMatch = key.match(/(.*?)\[(\d+)\]$/);
-                    if (arrayMatch) {
-                        const arrayKey = arrayMatch[1];
-                        const index = parseInt(arrayMatch[2], 10);
-                        const array = i18next.t(arrayKey, { returnObjects: true });
-                        translation = Array.isArray(array) && array[index] ? array[index] : key;
-                    } else {
-                        translation = i18next.t(key);
-                    }
-                    
-                    if (translation === key) {
-                        console.warn('Missing translation for key:', key);
-                    }
-                    element.textContent = translation;
-                }
-            });
-
-            // Update placeholders
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
-                const key = element.getAttribute('data-i18n-placeholder');
-                if (key) {
-                    const translation = i18next.t(key);
-                    if (translation === key) {
-                        console.warn('Missing placeholder translation for key:', key);
-                    }
-                    element.placeholder = translation;
-                }
-            });
-
-            // Update page title
-            document.title = i18next.t('form.title');
-            
-            // Update HTML lang attribute
-            document.documentElement.lang = i18next.language;
-            
-            // Update language selector
-            const langSelector = document.getElementById('language-selector');
-            if (langSelector) {
-                langSelector.value = i18next.language;
-            }
-        }
-
-        // Initialize language selector
-        document.addEventListener('DOMContentLoaded', () => {
-            // Wait for i18next to be ready
-            i18next.on('initialized', () => {
-                updateContent();
-            });
-
-            // Handle language change
-            const langSelector = document.getElementById('language-selector');
-            if (langSelector) {
-                langSelector.addEventListener('change', (e) => {
-                    i18next.changeLanguage(e.target.value).then(updateContent);
-                });
-            }
-
-            // Update direction for RTL languages if needed
-            i18next.on('languageChanged', (lng) => {
-                document.documentElement.lang = lng;
-                document.documentElement.dir = i18next.dir(lng);
-            });
-        });
-    </script>
 </body>
+
 </html>
