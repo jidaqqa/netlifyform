@@ -1,0 +1,53 @@
+{
+  "form": {
+    "title": "Verkoop Uw Auto Snel en Ontvang Direct Betaling",
+    "subtitle": "Vul ons eenvoudige formulier in en ontvang binnen enkele minuten een concurrerend bod. Geen verborgen kosten, geen verplichtingen.",
+    "benefits": [
+      "Dezelfde dag betaald",
+      "Geen verborgen kosten",
+      "Gratis ophalen van uw auto"
+    ],
+    "sections": {
+      "vehicle": "Voertuiginformatie",
+      "photos": "Foto's Uploaden (Optioneel)",
+      "contact": "Uw Contactgegevens"
+    },
+    "fields": {
+      "make": "Merk",
+      "model": "Model",
+      "year": "Bouwjaar",
+      "condition": "Staat",
+      "mileage": "Kilometerstand",
+      "transmission": "Versnellingsbak",
+      "fuel": "Brandstoftype",
+      "photos": "Auto-afbeeldingen (Optioneel, Max 10MB per bestand, maximaal 10 bestanden)",
+      "dragDrop": "Sleep uw foto's hierheen",
+      "browseFiles": "of klik om bestanden te selecteren",
+      "selectPhotos": "Selecteer Foto's",
+      "noFiles": "Geen bestanden geselecteerd",
+      "photoTips": "Fototips:",
+      "tips": [
+        "Maak foto's bij goed licht",
+        "Maak foto's van alle kanten van de auto",
+        "Maak close-upfoto's van eventuele schade",
+        "Toon het interieur en het dashboard",
+        "Zorg ervoor dat het kenteken zichtbaar is"
+      ],
+      "name": "Volledige Naam",
+      "phone": "Telefoonnummer",
+      "email": "E-mailadres",
+      "contactMethod": "Voorkeursmanier van Contact",
+      "phoneCall": "Telefonisch",
+      "whatsapp": "WhatsApp",
+      "emailContact": "E-mail",
+      "notes": "Aanvullende Opmerkingen",
+      "notesPlaceholder": "Vertel ons over speciale functies, recent onderhoud of problemen met het voertuig..."
+    },
+    "buttons": {
+      "back": "Terug",
+      "next": "Volgende",
+      "submit": "Ontvang Mijn Bod"
+    },
+    "trustBadge": "Betrouwbare Handelaar"
+  }
+}

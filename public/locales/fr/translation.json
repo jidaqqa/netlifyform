@@ -1,0 +1,53 @@
+{
+  "form": {
+    "title": "Vendez Votre Voiture Rapidement et Soyez Payé Immédiatement",
+    "subtitle": "Complétez notre formulaire simple ci-dessous et recevez une offre compétitive en quelques minutes. Pas de frais cachés, pas d'engagement.",
+    "benefits": [
+      "Paiement le jour même",
+      "Pas de frais cachés",
+      "Enlèvement du véhicule gratuit"
+    ],
+    "sections": {
+      "vehicle": "Informations sur le Véhicule",
+      "photos": "Télécharger des Photos (Optionnel)",
+      "contact": "Vos Coordonnées"
+    },
+    "fields": {
+      "make": "Marque",
+      "model": "Modèle",
+      "year": "Année",
+      "condition": "État",
+      "mileage": "Kilométrage",
+      "transmission": "Transmission",
+      "fuel": "Type de Carburant",
+      "photos": "Images de la Voiture (Optionnel, 10 Mo max par fichier, jusqu'à 10 fichiers)",
+      "dragDrop": "Glissez et déposez vos photos ici",
+      "browseFiles": "ou cliquez pour parcourir les fichiers",
+      "selectPhotos": "Sélectionner des Photos",
+      "noFiles": "Aucun fichier sélectionné",
+      "photoTips": "Conseils pour les Photos :",
+      "tips": [
+        "Prenez des photos avec un bon éclairage",
+        "Capturez tous les angles de la voiture",
+        "Incluez des gros plans des dommages éventuels",
+        "Montrez l'intérieur et le tableau de bord",
+        "Assurez-vous que la plaque d'immatriculation est visible"
+      ],
+      "name": "Nom Complet",
+      "phone": "Numéro de Téléphone",
+      "email": "Adresse Email",
+      "contactMethod": "Méthode de Contact Préférée",
+      "phoneCall": "Appel Téléphonique",
+      "whatsapp": "WhatsApp",
+      "emailContact": "Email",
+      "notes": "Notes Supplémentaires",
+      "notesPlaceholder": "Parlez-nous des caractéristiques spéciales, de l'entretien récent ou des problèmes du véhicule..."
+    },
+    "buttons": {
+      "back": "Retour",
+      "next": "Suivant",
+      "submit": "Obtenir Mon Offre"
+    },
+    "trustBadge": "Vendeur de Confiance"
+  }
+}
