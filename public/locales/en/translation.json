@@ -1,0 +1,53 @@
+{
+  "form": {
+    "title": "Sell Your Car Fast & Get Paid Instantly",
+    "subtitle": "Complete our simple form below and receive a competitive offer within minutes. No hidden fees, no obligations.",
+    "benefits": [
+      "Get paid same day",
+      "No hidden fees",
+      "Free vehicle collection"
+    ],
+    "sections": {
+      "vehicle": "Vehicle Information",
+      "photos": "Upload Photos (Optional)",
+      "contact": "Your Contact Information"
+    },
+    "fields": {
+      "make": "Make",
+      "model": "Model",
+      "year": "Year",
+      "condition": "Condition",
+      "mileage": "Mileage",
+      "transmission": "Transmission",
+      "fuel": "Fuel Type",
+      "photos": "Car Images (Optional, Max 10MB each, up to 10 files)",
+      "dragDrop": "Drag & drop your photos here",
+      "browseFiles": "or click to browse files",
+      "selectPhotos": "Select Photos",
+      "noFiles": "No files selected",
+      "photoTips": "Photo Tips:",
+      "tips": [
+        "Take photos in good lighting",
+        "Capture all angles of the car",
+        "Include close-ups of any damage",
+        "Show the interior and dashboard",
+        "Make sure the license plate is visible"
+      ],
+      "name": "Full Name",
+      "phone": "Phone Number",
+      "email": "Email Address",
+      "contactMethod": "Preferred Contact Method",
+      "phoneCall": "Phone Call",
+      "whatsapp": "WhatsApp",
+      "emailContact": "Email",
+      "notes": "Additional Notes",
+      "notesPlaceholder": "Tell us about any special features, recent maintenance, or issues with the vehicle..."
+    },
+    "buttons": {
+      "back": "Back",
+      "next": "Next",
+      "submit": "Get My Offer"
+    },
+    "trustBadge": "Trusted Dealer"
+  }
+}
