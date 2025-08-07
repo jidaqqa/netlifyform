@@ -1,13 +1,13 @@
 {
   "form": {
-    "title": "Vendez Votre Voiture - Rapide & Facile",
+    "title": "Vendez Votre Voiture Rapidement & Sans Tracas",
     "logo": "Premium Motors",
     "trustBadge": "Vendeur de Confiance",
     "subtitle": "Complétez notre formulaire simple ci-dessous et recevez une offre compétitive en quelques minutes. Pas de frais cachés, pas d'obligation.",
     "benefits": [
-      "Paiement le jour même",
+      "Paiement immédiat",
       "Pas de frais cachés",
-      "Enlèvement du véhicule gratuit"
+      "Reprise gratuite du véhicule"
     ],
     "sections": {
       "vehicle": "Informations sur le Véhicule",
@@ -24,12 +24,12 @@
       "mileage": "Kilométrage",
       "mileageHint": "Kilométrage actuel",
       "condition": "État",
-      "transmission": "Boîte de vitesses",
+      "transmission": "Transmission",
       "fuel": "Type de carburant",
       "photos": "Images de la voiture (Optionnel, max 10 Mo par fichier, jusqu'à 10 fichiers)",
-      "dragDrop": "Glissez et déposez vos photos ici",
+      "dragDrop": "Déposez vos photos ici",
       "browseFiles": "ou cliquez pour parcourir les fichiers",
-      "selectPhotos": "Sélectionner des photos",
+      "selectPhotos": "Choisir des photos",
       "noFiles": "Aucun fichier sélectionné",
       "photoTips": "Conseils photo",
       "tips": [
@@ -57,7 +57,7 @@
     "pageTitle": "Merci ! | Premium Motors",
     "title": "Merci !",
     "subtitle": "Nous avons bien reçu vos informations",
-    "message": "Notre équipe examinera les informations de votre voiture et vous contactera dans <strong>quelques heures</strong> avec une offre.",
+    "message": "Notre équipe va examiner les informations de votre voiture et vous contactera dans <strong>quelques heures</strong> avec une offre.",
     "contact": "Pour une assistance immédiate, appelez-nous au <strong class='phone-number'>+32 467 60 15 10</strong>.",
     "backToHome": "Retour à l'accueil"
   }
