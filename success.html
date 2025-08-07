@@ -80,6 +80,7 @@
     </style>
     <script src="https://unpkg.com/i18next@21.9.1/dist/umd/i18next.min.js"></script>
     <script src="https://unpkg.com/i18next-browser-languagedetector@6.1.3/i18nextBrowserLanguageDetector.min.js"></script>
+    <script src="https://unpkg.com/i18next-http-backend@1.4.5/i18nextHttpBackend.min.js"></script>
 </head>
 <body>
     <div class="form-container" style="max-width: 600px; text-align: center;">
@@ -94,19 +95,19 @@
                     <span data-i18n="form.trustBadge">Trusted Dealer</span>
                 </div>
             </div>
-            <h1 data-i18n="success.title">Thank You!</h1>
+            <h1 data-i18n="success.title"></h1>
         </div>
 
         <div style="padding: 30px;">
             <div style="font-size: 60px; color: var(--success); margin-bottom: 20px;">
                 <i class="fas fa-check-circle"></i>
             </div>
-            <h2 data-i18n="success.subtitle">We've Received Your Details</h2>
-            <p data-i18n="success.message">Our team will review your car information and contact you within <strong>24 hours</strong> with an offer.</p>
-            <p data-i18n="success.contact" data-i18n-phone="+32 467 60 15 10">For immediate assistance, call us at <strong class="phone-number">+32 467 60 15 10</strong>.</p>
+            <h2 data-i18n="success.subtitle"></h2>
+            <p data-i18n="success.message"></p>
+            <p data-i18n="success.contact" data-i18n-phone="+32 467 60 15 10"></p>
             
             <a href="/" class="submit-btn" style="text-decoration: none; display: inline-block; width: auto; padding: 12px 30px;">
-                <i class="fas fa-arrow-left"></i> <span data-i18n="success.backToHome">Back to Home</span>
+                <i class="fas fa-arrow-left"></i> <span data-i18n="success.backToHome"></span>
             </a>
         </div>
     </div>
@@ -114,75 +115,51 @@
     <script>
         // Get language from URL parameter or use browser language
         const urlParams = new URLSearchParams(window.location.search);
-        const lang = urlParams.get('lang') || navigator.language.split('-')[0] || 'en';
-
-        // Define translations
-        const resources = {
-            en: {
-                translation: {
-                    "success": {
-                        "pageTitle": "Thank You! | Premium Motors",
-                        "title": "Thank You!",
-                        "subtitle": "We've Received Your Details",
-                        "message": "Our team will review your car information and contact you within <strong>a few hours</strong> with an offer.",
-                        "contact": "For immediate assistance, call us at <strong class='phone-number'>+32 467 60 15 10</strong>.",
-                        "backToHome": "Back to Home"
-                    },
-                    "form": {
-                        "logo": "Premium Motors",
-                        "trustBadge": "Trusted Dealer"
-                    }
-                }
-            },
-            fr: {
-                translation: {
-                    "success": {
-                        "pageTitle": "Merci ! | Premium Motors",
-                        "title": "Merci !",
-                        "subtitle": "Nous avons bien reçu vos informations",
-                        "message": "Notre équipe examinera les informations de votre voiture et vous contactera dans <strong>quelques heures</strong> avec une offre.",
-                        "contact": "Pour une assistance immédiate, appelez-nous au <strong class='phone-number'>+32 467 60 15 10</strong>.",
-                        "backToHome": "Retour à l'accueil"
-                    },
-                    "form": {
-                        "logo": "Premium Motors",
-                        "trustBadge": "Vendeur de Confiance"
-                    }
-                }
-            },
-            nl: {
-                translation: {
-                    "success": {
-                        "pageTitle": "Bedankt! | Premium Motors",
-                        "title": "Bedankt!",
-                        "subtitle": "We hebben uw gegevens ontvangen",
-                        "message": "Ons team zal uw auto-informatie beoordelen en neemt binnen <strong>enkele uren</strong> contact met u op met een aanbod.",
-                        "contact": "Voor directe hulp kunt u ons bellen op <strong class='phone-number'>+32 467 60 15 10</strong>.",
-                        "backToHome": "Terug naar Home"
-                    },
-                    "form": {
-                        "logo": "Premium Motors",
-                        "trustBadge": "Vertrouwde Handelaar"
-                    }
-                }
-            }
-        };
-
+        const langParam = urlParams.get('lang');
+        
         // Initialize i18next
         i18next
+            .use(i18nextHttpBackend)
             .use(i18nextBrowserLanguageDetector)
             .init({
-                resources,
                 fallbackLng: 'en',
-                lng: ['en', 'fr', 'nl'].includes(lang) ? lang : 'en',
+                lng: langParam || undefined, // Use URL parameter if provided
+                supportedLngs: ['en', 'fr', 'nl'],
+                debug: false, // Debug disabled for production
+                detection: {
+                    order: ['querystring', 'navigator'],
+                    lookupQuerystring: 'lang',
+                    caches: [] // Disable language caching
+                },
+                backend: {
+                    loadPath: 'public/locales/{{lng}}/translation.json'
+                },
                 interpolation: {
                     escapeValue: false // Allows HTML in translations
                 }
             })
-            .then(() => {
-                // Update content when language is loaded
+            .then(function () {
                 updateContent();
+
+                // Set up language selector if it exists
+                const langSelector = document.getElementById('language-selector');
+                if (langSelector) {
+                    langSelector.value = i18next.language;
+                    langSelector.addEventListener('change', (e) => {
+                        // Update URL with new language
+                        const url = new URL(window.location);
+                        url.searchParams.set('lang', e.target.value);
+                        window.history.pushState({}, '', url);
+                        
+                        i18next.changeLanguage(e.target.value);
+                    });
+                }
             });
+
+        // Listen for language changes
+        i18next.on('languageChanged', () => {
+            updateContent();
+        });
 
         // Update content with translations
         function updateContent() {

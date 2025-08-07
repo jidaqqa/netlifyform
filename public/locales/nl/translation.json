@@ -51,7 +51,8 @@
     },
     "buttons": {
       "submit": "Verzenden"
-    }
+    },
+    "securityNotice": "Uw informatie is veilig en zal nooit met derden gedeeld worden."
   },
   "success": {
     "pageTitle": "Bedankt! | Premium Motors",

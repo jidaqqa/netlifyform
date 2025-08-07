@@ -51,7 +51,8 @@
     },
     "buttons": {
       "submit": "Soumettre"
-    }
+    },
+    "securityNotice": "Votre information est sécurisée et ne sera jamais partagée avec des tiers."
   },
   "success": {
     "pageTitle": "Merci ! | Premium Motors",
