@@ -333,6 +333,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     formData.append(`file${index}`, file);
                 });
                 
+                // Get current language
+                const currentLang = document.documentElement.lang || 'en';
+                
                 // Submit the form data to Netlify
                 fetch('/', {
                     method: 'POST',
@@ -340,8 +343,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 .then(response => {
                     if (response.ok) {
-                        // Redirect to success page on successful submission
-                        window.location.href = '/success.html';
+                        // Redirect to success page with language parameter
+                        window.location.href = `/success.html?lang=${currentLang}`;
                     } else {
                         throw new Error('Form submission failed');
                     }

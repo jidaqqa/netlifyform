@@ -1,6 +1,8 @@
 {
   "form": {
     "title": "Sell Your Car Fast & Get Paid Instantly",
+    "logo": "Premium Motors",
+    "trustBadge": "Trusted Dealer",
     "subtitle": "Complete our simple form below and receive a competitive offer within minutes. No hidden fees, no obligations.",
     "benefits": [
       "Get paid same day",
@@ -9,15 +11,19 @@
     ],
     "sections": {
       "vehicle": "Vehicle Information",
+      "vehicleDescription": "Tell us about your car to get the most accurate valuation.",
       "photos": "Upload Photos (Optional)",
-      "contact": "Your Contact Information"
+      "photosDescription": "Add clear photos to help us evaluate your car accurately. Include shots of the exterior, interior, and any damage.",
+      "contact": "Your Contact Information",
+      "contactDescription": "We'll use this information to contact you with your offer and arrange the next steps."
     },
     "fields": {
       "make": "Make",
       "model": "Model",
       "year": "Year",
-      "condition": "Condition",
       "mileage": "Mileage",
+      "mileageHint": "Current odometer reading",
+      "condition": "Condition",
       "transmission": "Transmission",
       "fuel": "Fuel Type",
       "photos": "Car Images (Optional, Max 10MB each, up to 10 files)",
@@ -25,7 +31,7 @@
       "browseFiles": "or click to browse files",
       "selectPhotos": "Select Photos",
       "noFiles": "No files selected",
-      "photoTips": "Photo Tips:",
+      "photoTips": "Photo Tips",
       "tips": [
         "Take photos in good lighting",
         "Capture all angles of the car",
@@ -33,9 +39,9 @@
         "Show the interior and dashboard",
         "Make sure the license plate is visible"
       ],
-      "name": "Full Name",
-      "phone": "Phone Number",
-      "email": "Email Address",
+      "namePlaceholder": "John Doe",
+      "phonePlaceholder": "+1 (555) 123-4567",
+      "emailPlaceholder": "your.email@example.com",
       "contactMethod": "Preferred Contact Method",
       "phoneCall": "Phone Call",
       "whatsapp": "WhatsApp",
@@ -44,10 +50,16 @@
       "notesPlaceholder": "Tell us about any special features, recent maintenance, or issues with the vehicle..."
     },
     "buttons": {
-      "back": "Back",
-      "next": "Next",
-      "submit": "Get My Offer"
+      "submit": "Submit"
     },
-    "trustBadge": "Trusted Dealer"
+    "securityNotice": "Your information is secure and will never be shared with third parties."
+  },
+  "success": {
+    "pageTitle": "Thank You! | Premium Motors",
+    "title": "Thank You!",
+    "subtitle": "We've Received Your Details",
+    "message": "Our team will review your car information and contact you within <strong>a few hours</strong> with an offer.",
+    "contact": "For immediate assistance, call us at <strong class='phone-number'>+32 467 60 15 10</strong>.",
+    "backToHome": "Back to Home"
   }
 }

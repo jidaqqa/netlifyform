@@ -1,53 +1,65 @@
 {
   "form": {
-    "title": "Verkoop Uw Auto Snel en Ontvang Direct Betaling",
-    "subtitle": "Vul ons eenvoudige formulier in en ontvang binnen enkele minuten een concurrerend bod. Geen verborgen kosten, geen verplichtingen.",
+    "title": "Uw Auto Snel en Moeiteloos Verkopen",
+    "logo": "Premium Motors",
+    "trustBadge": "Vertrouwde Handelaar",
+    "subtitle": "Vul ons eenvoudige formulier in en ontvang binnen enkele minuten een concurrerend aanbod. Geen verborgen kosten, geen verplichtingen.",
     "benefits": [
-      "Dezelfde dag betaald",
+      "Directe betaling",
       "Geen verborgen kosten",
-      "Gratis ophalen van uw auto"
+      "Gratis afhalen van uw auto"
     ],
     "sections": {
       "vehicle": "Voertuiginformatie",
+      "vehicleDescription": "Vertel ons over uw auto voor een nauwkeurige waardering.",
       "photos": "Foto's Uploaden (Optioneel)",
-      "contact": "Uw Contactgegevens"
+      "photosDescription": "Voeg duidelijke foto's toe om ons te helpen uw auto nauwkeurig te beoordelen. Voeg foto's toe van de buitenkant, binnenkant en eventuele schade.",
+      "contact": "Uw Contactgegevens",
+      "contactDescription": "We gebruiken deze gegevens om contact met u op te nemen over ons aanbod en de volgende stappen te regelen."
     },
     "fields": {
       "make": "Merk",
       "model": "Model",
       "year": "Bouwjaar",
-      "condition": "Staat",
       "mileage": "Kilometerstand",
-      "transmission": "Versnellingsbak",
+      "mileageHint": "Huidige kilometerstand",
+      "condition": "Staat",
+      "transmission": "Transmissie",
       "fuel": "Brandstoftype",
-      "photos": "Auto-afbeeldingen (Optioneel, Max 10MB per bestand, maximaal 10 bestanden)",
-      "dragDrop": "Sleep uw foto's hierheen",
-      "browseFiles": "of klik om bestanden te selecteren",
-      "selectPhotos": "Selecteer Foto's",
+      "photos": "Auto-afbeeldingen (Optioneel, max 10 MB per bestand, maximaal 10 bestanden)",
+      "dragDrop": "Sleep uw foto's hier naartoe",
+      "browseFiles": "of klik om bestanden te doorzoeken",
+      "selectPhotos": "Foto's selecteren",
       "noFiles": "Geen bestanden geselecteerd",
-      "photoTips": "Fototips:",
+      "photoTips": "Fototips",
       "tips": [
         "Maak foto's bij goed licht",
-        "Maak foto's van alle kanten van de auto",
-        "Maak close-upfoto's van eventuele schade",
+        "Maak foto's van alle hoeken van de auto",
+        "Neem close-ups van eventuele schade op",
         "Toon het interieur en het dashboard",
-        "Zorg ervoor dat het kenteken zichtbaar is"
+        "Zorg ervoor dat de kentekenplaat zichtbaar is"
       ],
-      "name": "Volledige Naam",
-      "phone": "Telefoonnummer",
-      "email": "E-mailadres",
-      "contactMethod": "Voorkeursmanier van Contact",
+      "namePlaceholder": "Jan Jansen",
+      "phonePlaceholder": "+31 6 12345678",
+      "emailPlaceholder": "uw.email@voorbeeld.nl",
+      "contactMethod": "Voorkeursmanier van contact",
       "phoneCall": "Telefonisch",
       "whatsapp": "WhatsApp",
       "emailContact": "E-mail",
-      "notes": "Aanvullende Opmerkingen",
+      "notes": "Aanvullende opmerkingen",
       "notesPlaceholder": "Vertel ons over speciale functies, recent onderhoud of problemen met het voertuig..."
     },
     "buttons": {
-      "back": "Terug",
-      "next": "Volgende",
-      "submit": "Ontvang Mijn Bod"
+      "submit": "Verzenden"
     },
-    "trustBadge": "Betrouwbare Handelaar"
+    "securityNotice": "Uw informatie is veilig en zal nooit met derden gedeeld worden."
+  },
+  "success": {
+    "pageTitle": "Bedankt! | Premium Motors",
+    "title": "Bedankt!",
+    "subtitle": "We hebben uw gegevens ontvangen",
+    "message": "Ons team beoordeelt uw auto-informatie en neemt binnen <strong>enkele uren</strong> contact met u op met een aanbod.",
+    "contact": "Voor directe hulp kunt u ons bellen op <strong class='phone-number'>+32 467 60 15 10</strong>.",
+    "backToHome": "Terug naar Home"
   }
 }

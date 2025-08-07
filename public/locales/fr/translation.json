@@ -1,31 +1,37 @@
 {
   "form": {
-    "title": "Vendez Votre Voiture Rapidement et Soyez Payé Immédiatement",
-    "subtitle": "Complétez notre formulaire simple ci-dessous et recevez une offre compétitive en quelques minutes. Pas de frais cachés, pas d'engagement.",
+    "title": "Vendez Votre Voiture Rapidement & Sans Tracas",
+    "logo": "Premium Motors",
+    "trustBadge": "Vendeur de Confiance",
+    "subtitle": "Complétez notre formulaire simple ci-dessous et recevez une offre compétitive en quelques minutes. Pas de frais cachés, pas d'obligation.",
     "benefits": [
-      "Paiement le jour même",
+      "Paiement immédiat",
       "Pas de frais cachés",
-      "Enlèvement du véhicule gratuit"
+      "Reprise gratuite du véhicule"
     ],
     "sections": {
       "vehicle": "Informations sur le Véhicule",
+      "vehicleDescription": "Décrivez votre voiture pour obtenir une évaluation précise.",
       "photos": "Télécharger des Photos (Optionnel)",
-      "contact": "Vos Coordonnées"
+      "photosDescription": "Ajoutez des photos claires pour nous aider à évaluer votre voiture avec précision. Incluez des photos de l'extérieur, de l'intérieur et de tout dommage.",
+      "contact": "Vos Coordonnées",
+      "contactDescription": "Nous utiliserons ces informations pour vous contacter avec notre offre et organiser les prochaines étapes."
     },
     "fields": {
       "make": "Marque",
       "model": "Modèle",
       "year": "Année",
-      "condition": "État",
       "mileage": "Kilométrage",
+      "mileageHint": "Kilométrage actuel",
+      "condition": "État",
       "transmission": "Transmission",
-      "fuel": "Type de Carburant",
-      "photos": "Images de la Voiture (Optionnel, 10 Mo max par fichier, jusqu'à 10 fichiers)",
-      "dragDrop": "Glissez et déposez vos photos ici",
+      "fuel": "Type de carburant",
+      "photos": "Images de la voiture (Optionnel, max 10 Mo par fichier, jusqu'à 10 fichiers)",
+      "dragDrop": "Déposez vos photos ici",
       "browseFiles": "ou cliquez pour parcourir les fichiers",
-      "selectPhotos": "Sélectionner des Photos",
+      "selectPhotos": "Choisir des photos",
       "noFiles": "Aucun fichier sélectionné",
-      "photoTips": "Conseils pour les Photos :",
+      "photoTips": "Conseils photo",
       "tips": [
         "Prenez des photos avec un bon éclairage",
         "Capturez tous les angles de la voiture",
@@ -33,21 +39,27 @@
         "Montrez l'intérieur et le tableau de bord",
         "Assurez-vous que la plaque d'immatriculation est visible"
       ],
-      "name": "Nom Complet",
-      "phone": "Numéro de Téléphone",
-      "email": "Adresse Email",
-      "contactMethod": "Méthode de Contact Préférée",
-      "phoneCall": "Appel Téléphonique",
+      "namePlaceholder": "Jean Dupont",
+      "phonePlaceholder": "+33 6 12 34 56 78",
+      "emailPlaceholder": "votre.email@exemple.com",
+      "contactMethod": "Méthode de contact préférée",
+      "phoneCall": "Appel téléphonique",
       "whatsapp": "WhatsApp",
       "emailContact": "Email",
-      "notes": "Notes Supplémentaires",
+      "notes": "Remarques supplémentaires",
       "notesPlaceholder": "Parlez-nous des caractéristiques spéciales, de l'entretien récent ou des problèmes du véhicule..."
     },
     "buttons": {
-      "back": "Retour",
-      "next": "Suivant",
-      "submit": "Obtenir Mon Offre"
+      "submit": "Soumettre"
     },
-    "trustBadge": "Vendeur de Confiance"
+    "securityNotice": "Votre information est sécurisée et ne sera jamais partagée avec des tiers."
+  },
+  "success": {
+    "pageTitle": "Merci ! | Premium Motors",
+    "title": "Merci !",
+    "subtitle": "Nous avons bien reçu vos informations",
+    "message": "Notre équipe va examiner les informations de votre voiture et vous contactera dans <strong>quelques heures</strong> avec une offre.",
+    "contact": "Pour une assistance immédiate, appelez-nous au <strong class='phone-number'>+32 467 60 15 10</strong>.",
+    "backToHome": "Retour à l'accueil"
   }
 }
