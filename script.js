@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Special handling for file input
         fileInput.addEventListener('change', function() {
-            if (this.files.length > 0) {
+            if (this.files.length >= 2) {
                 this.classList.remove('error');
                 const errorMsg = this.nextElementSibling;
                 if (errorMsg && errorMsg.classList.contains('validation-message')) {
@@ -298,6 +298,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleFormSubmit(e) {
         e.preventDefault();
         
+        // Reset previous errors
+        document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+        document.querySelectorAll('.validation-message').forEach(el => el.remove());
+        
         // Validate all fields
         let isValid = true;
         document.querySelectorAll('[required]').forEach(field => {
@@ -307,6 +311,36 @@ document.addEventListener('DOMContentLoaded', function() {
                 isValid = false;
             }
         });
+        
+        // Validate minimum 2 photos
+        const fileCount = fileInput.files.length;
+        if (fileCount < 2) {
+            isValid = false;
+            const fileUpload = document.querySelector('.file-upload');
+            fileUpload.classList.add('error');
+            
+            // Create and show error message
+            const errorMsg = document.createElement('div');
+            errorMsg.className = 'validation-message';
+            errorMsg.textContent = i18next.language === 'fr' ? 
+                'Veuillez télécharger au moins 2 photos' : 
+                i18next.language === 'nl' ?
+                'Upload minimaal 2 foto\'s' :
+                'Please upload at least 2 photos';
+            errorMsg.style.color = '#e53e3e';
+            errorMsg.style.marginTop = '5px';
+            errorMsg.style.fontSize = '0.8rem';
+            
+            const existingError = fileUpload.nextElementSibling;
+            if (!existingError || !existingError.classList.contains('validation-message')) {
+                fileUpload.parentNode.insertBefore(errorMsg, fileUpload.nextSibling);
+            }
+            
+            if (isValid) {
+                // If this was the only error, scroll to it
+                fileUpload.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
         
         if (!isValid) {
             // Scroll to first error

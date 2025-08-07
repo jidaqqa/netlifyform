@@ -12,8 +12,8 @@
     "sections": {
       "vehicle": "Voertuiginformatie",
       "vehicleDescription": "Vertel ons over uw auto voor een nauwkeurige waardering.",
-      "photos": "Foto's Uploaden (Optioneel)",
-      "photosDescription": "Voeg duidelijke foto's toe om ons te helpen uw auto nauwkeurig te beoordelen. Voeg foto's toe van de buitenkant, binnenkant en eventuele schade.",
+      "photos": "Foto's Uploaden",
+      "photosDescription": "Upload minimaal 2 duidelijke foto's om ons te helpen uw auto nauwkeurig te beoordelen. Voeg foto's toe van de buitenkant, binnenkant en eventuele schade.",
       "contact": "Uw Contactgegevens",
       "contactDescription": "We gebruiken deze gegevens om contact met u op te nemen over ons aanbod en de volgende stappen te regelen."
     },
@@ -26,7 +26,10 @@
       "condition": "Staat",
       "transmission": "Transmissie",
       "fuel": "Brandstoftype",
-      "photos": "Auto-afbeeldingen (Optioneel, max 10 MB per bestand, maximaal 10 bestanden)",
+      "expectedPrice": "Gewenste prijs",
+      "expectedPricePlaceholder": "Vul uw gewenste prijs in",
+      "expectedPriceHint": "Dit helpt ons om uw verwachtingen te begrijpen",
+      "photos": "Auto-afbeeldingen (Minimaal 2, max 10 MB per bestand, maximaal 10 bestanden)",
       "dragDrop": "Sleep uw foto's hier naartoe",
       "browseFiles": "of klik om bestanden te doorzoeken",
       "selectPhotos": "Foto's selecteren",
