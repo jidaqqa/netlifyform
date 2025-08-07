@@ -12,8 +12,8 @@
     "sections": {
       "vehicle": "Informations sur le Véhicule",
       "vehicleDescription": "Décrivez votre voiture pour obtenir une évaluation précise.",
-      "photos": "Télécharger des Photos (Optionnel)",
-      "photosDescription": "Ajoutez des photos claires pour nous aider à évaluer votre voiture avec précision. Incluez des photos de l'extérieur, de l'intérieur et de tout dommage.",
+      "photos": "Télécharger des Photos",
+      "photosDescription": "Veuillez télécharger au moins 2 photos claires pour nous aider à évaluer votre voiture avec précision. Incluez des photos de l'extérieur, de l'intérieur et de tout dommage.",
       "contact": "Vos Coordonnées",
       "contactDescription": "Nous utiliserons ces informations pour vous contacter avec notre offre et organiser les prochaines étapes."
     },
@@ -26,7 +26,10 @@
       "condition": "État",
       "transmission": "Transmission",
       "fuel": "Type de carburant",
-      "photos": "Images de la voiture (Optionnel, max 10 Mo par fichier, jusqu'à 10 fichiers)",
+      "expectedPrice": "Prix attendu",
+      "expectedPricePlaceholder": "Indiquez votre prix attendu",
+      "expectedPriceHint": "Cela nous aide à comprendre vos attentes",
+      "photos": "Images de la voiture (Minimum 2, max 10 Mo par fichier, jusqu'à 10 fichiers)",
       "dragDrop": "Déposez vos photos ici",
       "browseFiles": "ou cliquez pour parcourir les fichiers",
       "selectPhotos": "Choisir des photos",

@@ -12,8 +12,8 @@
     "sections": {
       "vehicle": "Vehicle Information",
       "vehicleDescription": "Tell us about your car to get the most accurate valuation.",
-      "photos": "Upload Photos (Optional)",
-      "photosDescription": "Add clear photos to help us evaluate your car accurately. Include shots of the exterior, interior, and any damage.",
+      "photos": "Upload Photos",
+      "photosDescription": "Please upload at least 2 clear photos to help us evaluate your car accurately. Include shots of the exterior, interior, and any damage.",
       "contact": "Your Contact Information",
       "contactDescription": "We'll use this information to contact you with your offer and arrange the next steps."
     },
@@ -26,7 +26,10 @@
       "condition": "Condition",
       "transmission": "Transmission",
       "fuel": "Fuel Type",
-      "photos": "Car Images (Optional, Max 10MB each, up to 10 files)",
+      "expectedPrice": "Expected Price",
+      "expectedPricePlaceholder": "Enter your expected price",
+      "expectedPriceHint": "This helps us understand your expectations",
+      "photos": "Car Images (Minimum 2, Max 10MB each, up to 10 files)",
       "dragDrop": "Drag & drop your photos here",
       "browseFiles": "or click to browse files",
       "selectPhotos": "Select Photos",
