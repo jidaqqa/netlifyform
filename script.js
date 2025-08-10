@@ -496,6 +496,17 @@ async function handleFormSubmit(e) {
             // Add the hidden file input to the form
             form.appendChild(hiddenFileInput);
             
+            // Add form-name if it doesn't exist
+            if (!form.querySelector('input[name="form-name"]')) {
+                const formNameInput = document.createElement('input');
+                formNameInput.type = 'hidden';
+                formNameInput.name = 'form-name';
+                formNameInput.value = 'sell-car';
+                form.appendChild(formNameInput);
+            }
+            
+            console.log('Submitting form to Netlify...');
+            
             // Submit the form normally - Netlify will handle the rest
             form.submit();
             
