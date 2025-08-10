@@ -506,19 +506,7 @@ async function handleFormSubmit(e) {
                 }
             }
             
-            // Submit to Netlify
-            const response = await fetch('/', {
-                method: 'POST',
-                body: formData
-            });
-
-            if (response.ok) {
-                //console.log('Form submitted successfully');
-                // Redirect to success page with language parameter
-                window.location.href = `/success.html?lang=${currentLanguage}`;
-            } else {
-                throw new Error(`Form submission failed: ${response.status} ${response.statusText}`);
-            }
+        form.submit();
             
         } catch (error) {
             //console.error('Form submission error:', error);
