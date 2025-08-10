@@ -128,15 +128,9 @@
             </div>
         </div>
 
-        <form name="sell-car" method="POST" netlify netlify-honeypot="bot-field" enctype="multipart/form-data" data-netlify-recaptcha="true" action="/success.html">
+        <form name="sell-car" method="POST" netlify enctype="multipart/form-data" action="/success.html">
             <!-- Hidden Netlify Form Name -->
             <input type="hidden" name="form-name" value="sell-car">
-            <!-- Honeypot Field -->
-            <div class="hidden">
-                <label>Don't fill this out if you're human: <input name="bot-field"></label>
-            </div>
-
-
             <!-- Car Details Section -->
             <div class="form-section">
                 <h2><i class="fas fa-car"></i> <span data-i18n="form.sections.vehicle">Vehicle Information</span></h2>
