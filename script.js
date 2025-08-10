@@ -409,7 +409,7 @@ function removeFile(index) {
 
 // Handle form submission
 async function handleFormSubmit(e) {
-    //console.log('Form submission started');
+    console.log('Form submission started');
     e.preventDefault();
     
     // Reset previous errors
@@ -430,7 +430,7 @@ async function handleFormSubmit(e) {
     
     // Validate minimum 2 photos
     const fileCount = filesArray.length;
-    //console.log('File count for validation:', fileCount);
+    console.log('File count for validation:', fileCount);
     
     if (fileCount < 2) {
         isValid = false;
@@ -461,7 +461,7 @@ async function handleFormSubmit(e) {
     }
     
     if (!isValid) {
-        //console.log('Form validation failed');
+        console.log('Form validation failed');
         // Scroll to first error
         const firstError = document.querySelector('.error');
         if (firstError) {
@@ -478,38 +478,29 @@ async function handleFormSubmit(e) {
         submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${submitBtn.textContent.trim()}`;
         
         try {
-            const formData = new FormData(form);
+            // For Netlify forms, we need to let the form submit naturally
+            // after we've validated everything and prepared the files
             
-            // Clear any existing file data and add current files
-            formData.delete('photos[]');
-            formData.delete('photos');
+            // Create a hidden file input to hold our files
+            const hiddenFileInput = document.createElement('input');
+            hiddenFileInput.type = 'file';
+            hiddenFileInput.name = 'photos';
+            hiddenFileInput.multiple = true;
+            hiddenFileInput.style.display = 'none';
             
-            //console.log('Adding', filesArray.length, 'files to form data');
-            filesArray.forEach((file, index) => {
-                formData.append('photos[]', file);
-                //console.log(`Added file ${index + 1}:`, file.name, file.size, 'bytes');
-            });
+            // Create a DataTransfer object to hold our files
+            const dataTransfer = new DataTransfer();
+            filesArray.forEach(file => dataTransfer.items.add(file));
+            hiddenFileInput.files = dataTransfer.files;
             
-            // Add file count for server-side validation
-            formData.append('fileCount', filesArray.length.toString());
+            // Add the hidden file input to the form
+            form.appendChild(hiddenFileInput);
             
-            // Add current language
-            formData.append('language', currentLanguage);
-            
-            // Debug: Log form data
-            //console.log('Form data entries:');
-            for (let pair of formData.entries()) {
-                if (pair[1] instanceof File) {
-                    //console.log(pair[0], `[File: ${pair[1].name}, ${pair[1].size} bytes]`);
-                } else {
-                    //console.log(pair[0], pair[1]);
-                }
-            }
-            
-        form.submit();
+            // Submit the form normally - Netlify will handle the rest
+            form.submit();
             
         } catch (error) {
-            //console.error('Form submission error:', error);
+            console.error('Form submission error:', error);
             alert('There was an error submitting the form. Please try again.');
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalBtnText;
