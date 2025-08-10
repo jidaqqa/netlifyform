@@ -228,12 +228,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="expectedPrice" class="required" data-i18n="form.fields.expectedPrice"></label>
+                        <label for="expectedPrice" class="required" data-i18n="form.fields.expectedPrice">Expected Price</label>
                         <div class="input-with-currency">
                             <span class="currency-symbol">€</span>
                             <input type="number" id="expectedPrice" name="expectedPrice" min="0" step="0.01" placeholder="" data-i18n-placeholder="form.fields.expectedPricePlaceholder" required>
                         </div>
-                        <span class="form-hint" data-i18n="form.fields.expectedPriceHint"></span>
+                        <span class="form-hint" data-i18n="form.fields.expectedPriceHint">This helps us understand your expectations</span>
                     </div>
 
                     <div class="form-group">
@@ -262,53 +262,6 @@
                     </div>
 
 
-                </div>
-            </div>
-
-            <!-- Photos Section -->
-            <div class="form-section" id="photos-section">
-                <h2><i class="fas fa-camera"></i> <span data-i18n="form.sections.photos">Upload Photos</span>
-                </h2>
-                <p class="section-description" data-i18n="form.sections.photosDescription">Please upload at least 2 clear photos to help us
-                    evaluate your car accurately. Include shots of the exterior, interior, and any damage.</p>
-
-                <div class="form-group">
-                    <label for="photos" class="required" data-i18n="form.fields.photos">Car Images (Minimum 2, Max 10MB each, up to 10
-                        files)</label>
-                    <div class="file-upload" id="drop-zone">
-                        <input type="file" id="photos" name="photos" multiple accept="image/*">
-                        <div class="upload-instructions">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <div class="upload-text">
-                                <strong data-i18n="form.fields.dragDrop">Drag & drop your photos here</strong>
-                                <span data-i18n="form.fields.browseFiles">or click to browse files</span>
-                            </div>
-                            <div style="text-align: center; width: 100%;">
-                                <button type="button" class="upload-btn"
-                                    onclick="document.getElementById('photos').click()">
-                                    <span class="btn-content">
-                                        <i class="fas fa-folder-open"></i> <span
-                                            data-i18n="form.fields.selectPhotos">Select Photos</span>
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-                        <div id="file-list" class="file-list">
-                            <p class="no-files" data-i18n="form.fields.noFiles">No files selected</p>
-                        </div>
-                    </div>
-                    <!-- Preview Container -->
-                    <div id="preview" class="file-preview"></div>
-                    <div class="photo-tips">
-                        <p><strong data-i18n="form.fields.photoTips">Photo Tips:</strong></p>
-                        <ul>
-                            <li data-i18n="form.fields.tips.0">Take photos in good lighting</li>
-                            <li data-i18n="form.fields.tips.1">Capture all angles of the car</li>
-                            <li data-i18n="form.fields.tips.2">Include close-ups of any damage</li>
-                            <li data-i18n="form.fields.tips.3">Show the interior and dashboard</li>
-                            <li data-i18n="form.fields.tips.4">Make sure the license plate is visible</li>
-                        </ul>
-                    </div>
                 </div>
             </div>
 
