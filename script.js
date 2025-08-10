@@ -478,23 +478,19 @@ async function handleFormSubmit(e) {
         submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${submitBtn.textContent.trim()}`;
         
         try {
-            // For Netlify forms, we need to let the form submit naturally
-            // after we've validated everything and prepared the files
-            
-            // Create a hidden file input to hold our files
-            const hiddenFileInput = document.createElement('input');
-            hiddenFileInput.type = 'file';
-            hiddenFileInput.name = 'photos';
-            hiddenFileInput.multiple = true;
-            hiddenFileInput.style.display = 'none';
-            
-            // Create a DataTransfer object to hold our files
+            // For Netlify forms, we need to use the original file input
+            const originalFileInput = document.getElementById('photos');
             const dataTransfer = new DataTransfer();
             filesArray.forEach(file => dataTransfer.items.add(file));
-            hiddenFileInput.files = dataTransfer.files;
             
-            // Add the hidden file input to the form
-            form.appendChild(hiddenFileInput);
+            // Update the original file input with our files
+            originalFileInput.files = dataTransfer.files;
+            
+            // Make sure the original file input is visible to Netlify
+            originalFileInput.style.display = 'block';
+            originalFileInput.style.visibility = 'hidden';
+            originalFileInput.style.position = 'absolute';
+            originalFileInput.style.top = '-9999px';
             
             // Add form-name if it doesn't exist
             if (!form.querySelector('input[name="form-name"]')) {
