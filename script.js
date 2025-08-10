@@ -408,9 +408,8 @@ function removeFile(index) {
 }
 
 // Handle form submission
-async function handleFormSubmit(e) {
+function handleFormSubmit(e) {
     console.log('Form submission started');
-    e.preventDefault();
     
     // Reset previous errors
     document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
@@ -467,33 +466,56 @@ async function handleFormSubmit(e) {
         if (firstError) {
             firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        return;
+        e.preventDefault();
+        return false;
     }
     
-    // Show loading state
+    // Show loading state on the submit button first
     const submitBtn = e.target.querySelector('button[type="submit"]');
     if (submitBtn) {
-        const originalBtnText = submitBtn.innerHTML;
         submitBtn.disabled = true;
         submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${submitBtn.textContent.trim()}`;
-        
+    }
+    
+    // Use a small timeout to ensure the UI updates before form submission
+    setTimeout(() => {
         try {
-            // Update the file input with the current files using DataTransfer
+            // Create a new file input element
+            const newFileInput = document.createElement('input');
+            newFileInput.type = 'file';
+            newFileInput.name = 'photos';
+            newFileInput.multiple = true;
+            newFileInput.style.display = 'none';
+            
+            // Add files to the new input
             const dataTransfer = new DataTransfer();
             filesArray.forEach(file => dataTransfer.items.add(file));
-            fileInput.files = dataTransfer.files;
+            newFileInput.files = dataTransfer.files;
             
-            // Let Netlify handle the form submission
+            // Replace the old file input with the new one
+            fileInput.parentNode.insertBefore(newFileInput, fileInput);
+            fileInput.remove();
+            fileInput = newFileInput;
+            
             console.log('Submitting form to Netlify with', filesArray.length, 'files...');
-            return true; // Allow form to submit naturally
             
+            // Submit the form programmatically
+            if (form) {
+                form.submit();
+            }
         } catch (error) {
-            console.error('Form submission error:', error);
-            alert('There was an error submitting the form. Please try again.');
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalBtnText;
+            console.error('Error during form submission:', error);
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Submit';
+                alert('Error submitting form. Please try again.');
+            }
         }
-    }
+    }, 100);
+    
+    // Prevent the default form submission since we're handling it manually
+    e.preventDefault();
+    return false;
 }
 
 // Drag and drop helper functions
