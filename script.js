@@ -1,101 +1,146 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // DOM Elements
-    const form = document.querySelector('form');
-    const fileInput = document.getElementById('photos');
-    const preview = document.getElementById('preview');
-    const fileList = document.getElementById('file-list');
-    const noFilesMsg = fileList ? fileList.querySelector('.no-files') : null;
-    const dropZone = document.querySelector('.file-upload');
-    const submitBtn = document.querySelector('.submit-btn');
-    const languageSelector = document.getElementById('language-selector');
-    const selectedFlag = document.querySelector('.selected-flag');
-    let filesArray = [];
+// Global state to track files and translations
+let filesArray = [];
+let currentLanguage = document.documentElement.lang || 'en';
+
+// DOM Elements
+let form, fileInput, preview, fileList, noFilesMsg, dropZone, submitBtn, languageSelector, selectedFlag;
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    // Wait for i18n to be ready
+    const checkI18n = setInterval(() => {
+        if (window.i18next && i18next.isInitialized) {
+            clearInterval(checkI18n);
+            initApp();
+        }
+    }, 100);
     
-    // Check if required elements exist
-    if (!fileInput || !preview || !fileList || !dropZone) {
+    // Also listen for i18n initialization
+    if (window.i18next) {
+        i18next.on('initialized', initApp);
+    }
+});
+
+function initApp() {
+    //console.log('Initializing app...');
+    
+    // Initialize DOM elements
+    form = document.querySelector('form');
+    fileInput = document.getElementById('photos');
+    preview = document.getElementById('preview');
+    fileList = document.getElementById('file-list');
+    noFilesMsg = fileList ? fileList.querySelector('.no-files') : null;
+    dropZone = document.querySelector('.file-upload');
+    submitBtn = document.querySelector('button[type="submit"]');
+    languageSelector = document.getElementById('language-selector');
+    selectedFlag = document.querySelector('.selected-flag');
+    
+    // console.log('DOM elements found:', {
+    //     form: !!form,
+    //     fileInput: !!fileInput,
+    //     preview: !!preview,
+    //     fileList: !!fileList,
+    //     dropZone: !!dropZone
+    // });
+    
+    // Initialize file upload UI
+    updateFileList([]);
+    
+    // Initialize event listeners
+    initEventListeners();
+}
+
+function initEventListeners() {
+    //console.log('Initializing event listeners...');
+    
+    if (!fileInput || !preview || !dropZone) {
         console.error('Required elements for file upload not found');
         return;
     }
     
-    // Initialize language selector
-    if (languageSelector && selectedFlag) {
-        // Set initial flag
-        updateFlag(languageSelector.value);
-        
-        // Update flag when language changes
-        languageSelector.addEventListener('change', function() {
-            updateFlag(this.value);
-        });
-    }
-    
-    // Update flag emoji based on selected language
-    function updateFlag(lang) {
-        const flagMap = {
-            'en': '🇬🇧',
-            'fr': '🇫🇷',
-            'nl': '🇳🇱'
-        };
-        if (selectedFlag && flagMap[lang]) {
-            selectedFlag.textContent = flagMap[lang];
-        }
-    }
-
-    // Initialize form validation
-    initFormValidation();
-
-    // File Upload Handling
+    // File input change event
     fileInput.addEventListener('change', handleFileSelect);
     
-    // Drag and drop functionality
+    // Drag and drop events
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
         dropZone.addEventListener(eventName, preventDefaults, false);
     });
-
+    
     ['dragenter', 'dragover'].forEach(eventName => {
         dropZone.addEventListener(eventName, highlight, false);
     });
-
+    
     ['dragleave', 'drop'].forEach(eventName => {
         dropZone.addEventListener(eventName, unhighlight, false);
     });
-
-    dropZone.addEventListener('drop', handleDrop, false);
-
-    // Form submission
-    form.addEventListener('submit', handleFormSubmit);
     
-    // Remove any next button click handlers since we're using a direct submit button now
-    const nextBtn = document.getElementById('next-btn');
-    if (nextBtn) {
-        const newNextBtn = nextBtn.cloneNode(true);
-        nextBtn.parentNode.replaceChild(newNextBtn, nextBtn);
+    dropZone.addEventListener('drop', handleDrop, false);
+    
+    // Form submission
+    if (form) {
+        form.addEventListener('submit', handleFormSubmit);
     }
-
-    // Initialize tooltips and other UI elements
-    initTooltips();
-
-    // Initialize form validation
-    function initFormValidation() {
-        // Add event listeners to all required fields
-        document.querySelectorAll('[required]').forEach(field => {
-            // Validate on blur
-            field.addEventListener('blur', validateField);
-            
-            // Clear validation on input
-            field.addEventListener('input', function() {
-                if (this.value.trim()) {
-                    this.classList.remove('error');
-                    const errorMsg = this.nextElementSibling;
-                    if (errorMsg && errorMsg.classList.contains('validation-message')) {
-                        errorMsg.style.display = 'none';
-                    }
-                }
-            });
+    
+    // Language selector
+    if (languageSelector && selectedFlag) {
+        updateFlag(languageSelector.value);
+        languageSelector.addEventListener('change', function() {
+            updateFlag(this.value);
+            i18next.changeLanguage(this.value);
         });
+    }
+    
+    // Language change handler - preserve file state during translation updates
+    i18next.on('languageChanged', (lng) => {
+        currentLanguage = lng;
+        console.log('Language changed to:', lng);
+        
+        // Re-render file list with updated translations but preserve files
+        if (filesArray.length > 0) {
+            updateFileListTranslations();
+        }
+    });
+    
+    // Initialize form validation
+    initFormValidation();
+    
+    //console.log('Event listeners initialized');
+}
 
-        // Special handling for file input
+// Update flag emoji based on selected language
+function updateFlag(lang) {
+    const flagMap = {
+        'en': '🇬🇧',
+        'fr': '🇫🇷',
+        'nl': '🇳🇱'
+    };
+    if (selectedFlag && flagMap[lang]) {
+        selectedFlag.textContent = flagMap[lang];
+    }
+}
+
+function initFormValidation() {
+    // Add event listeners to all required fields
+    document.querySelectorAll('[required]').forEach(field => {
+        // Validate on blur
+        field.addEventListener('blur', validateField);
+        
+        // Clear validation on input
+        field.addEventListener('input', function() {
+            if (this.value.trim()) {
+                this.classList.remove('error');
+                const errorMsg = this.nextElementSibling;
+                if (errorMsg && errorMsg.classList.contains('validation-message')) {
+                    errorMsg.style.display = 'none';
+                }
+            }
+        });
+    });
+
+    // Special handling for file input
+    if (fileInput) {
         fileInput.addEventListener('change', function() {
-            if (this.files.length >= 2) {
+            if (filesArray.length >= 2) {
                 this.classList.remove('error');
                 const errorMsg = this.nextElementSibling;
                 if (errorMsg && errorMsg.classList.contains('validation-message')) {
@@ -104,324 +149,396 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+}
 
-    // Validate individual field
-    function validateField(e) {
-        const field = e.target;
-        const value = field.value.trim();
-        const isValid = field.checkValidity();
+// Validate individual field
+function validateField(e) {
+    const field = e.target;
+    const value = field.value.trim();
+    const isValid = field.checkValidity();
+    
+    if (!isValid || (field.required && !value)) {
+        field.classList.add('error');
+        let errorMsg = field.nextElementSibling;
         
-        if (!isValid || (field.required && !value)) {
-            field.classList.add('error');
-            let errorMsg = field.nextElementSibling;
-            
-            if (!errorMsg || !errorMsg.classList.contains('validation-message')) {
-                errorMsg = document.createElement('div');
-                errorMsg.className = 'validation-message';
-                errorMsg.textContent = field.validationMessage || 'This field is required';
-                field.parentNode.insertBefore(errorMsg, field.nextSibling);
-            }
-            errorMsg.style.display = 'block';
-            return false;
+        if (!errorMsg || !errorMsg.classList.contains('validation-message')) {
+            errorMsg = document.createElement('div');
+            errorMsg.className = 'validation-message';
+            errorMsg.textContent = field.validationMessage || 'This field is required';
+            field.parentNode.insertBefore(errorMsg, field.nextSibling);
         }
-        
-        field.classList.remove('error');
-        const errorMsg = field.nextElementSibling;
-        if (errorMsg && errorMsg.classList.contains('validation-message')) {
-            errorMsg.style.display = 'none';
-        }
-        return true;
+        errorMsg.style.display = 'block';
+        return false;
     }
-
-    // Handle file selection
-    function handleFileSelect(e) {
-        const newFiles = e.target.files;
-        if (newFiles && newFiles.length > 0) {
-            // Create a new array combining existing files with new ones
-            const updatedFiles = Array.from(filesArray);
-            
-            // Add new files, checking for duplicates
-            Array.from(newFiles).forEach(newFile => {
-                // Check if file already exists by name and size
-                const isDuplicate = filesArray.some(
-                    existingFile => 
-                        existingFile.name === newFile.name && 
-                        existingFile.size === newFile.size &&
-                        existingFile.lastModified === newFile.lastModified
-                );
-                
-                if (!isDuplicate) {
-                    updatedFiles.push(newFile);
-                }
-            });
-            
-            // Update the file input with all files
-            const dataTransfer = new DataTransfer();
-            updatedFiles.forEach(file => dataTransfer.items.add(file));
-            fileInput.files = dataTransfer.files;
-            
-            // Update the UI with all files
-            updateFileList(updatedFiles);
-        }
+    
+    field.classList.remove('error');
+    const errorMsg = field.nextElementSibling;
+    if (errorMsg && errorMsg.classList.contains('validation-message')) {
+        errorMsg.style.display = 'none';
     }
+    return true;
+}
 
-    // Handle file drop
-    function handleDrop(e) {
-        e.preventDefault();
-        const dt = e.dataTransfer;
-        const newFiles = dt.files;
-        if (newFiles && newFiles.length > 0) {
-            // Create a new array combining existing files with new ones
-            const updatedFiles = Array.from(filesArray);
-            
-            // Add new files, checking for duplicates
-            Array.from(newFiles).forEach(newFile => {
-                // Check if file already exists by name and size
-                const isDuplicate = filesArray.some(
-                    existingFile => 
-                        existingFile.name === newFile.name && 
-                        existingFile.size === newFile.size &&
-                        existingFile.lastModified === newFile.lastModified
-                );
-                
-                if (!isDuplicate) {
-                    updatedFiles.push(newFile);
-                }
-            });
-            
-            // Update the file input with all files
-            const dataTransfer = new DataTransfer();
-            updatedFiles.forEach(file => dataTransfer.items.add(file));
-            fileInput.files = dataTransfer.files;
-            
-            // Update the UI with all files
-            updateFileList(updatedFiles);
+// Handle file selection
+function handleFileSelect(e) {
+    //console.log('File select triggered');
+    e.stopPropagation();
+    
+    const newFiles = Array.from(e.target.files || []);
+    //console.log('New files selected:', newFiles.length);
+    
+    if (newFiles.length === 0) return;
+    
+    // Filter for image files only
+    const imageFiles = newFiles.filter(file => {
+        const isImage = file.type && file.type.startsWith('image/');
+        if (!isImage) {
+            console.warn('Skipping non-image file:', file.name);
         }
-    }
-
-    // Update file list and preview
-    function updateFileList(files) {
-        if (!files || files.length === 0) return;
+        return isImage;
+    });
+    
+    //console.log('Image files:', imageFiles.length);
+    
+    // Add new files to existing array (avoid duplicates)
+    imageFiles.forEach(newFile => {
+        const isDuplicate = filesArray.some(
+            existingFile => 
+                existingFile.name === newFile.name && 
+                existingFile.size === newFile.size
+        );
         
-        // Convert to array and filter for images only
-        filesArray = Array.from(files).filter(file => file.type.match('image.*'));
-        
-        console.log('Updating file list with', filesArray.length, 'images');
-        
-        // Update file count and no-files message
-        if (filesArray.length > 0) {
-            fileList.classList.remove('empty');
-            if (noFilesMsg) noFilesMsg.style.display = 'none';
+        if (!isDuplicate && filesArray.length < 10) {
+            filesArray.push(newFile);
+            //console.log('Added file:', newFile.name);
+        } else if (isDuplicate) {
+            console.log('Duplicate file skipped:', newFile.name);
         } else {
-            fileList.classList.add('empty');
-            if (noFilesMsg) noFilesMsg.style.display = 'block';
+            console.log('File limit reached, skipping:', newFile.name);
         }
-        
-        // Update preview
-        preview.innerHTML = '';
-        
-        // Process each file
-        const processFile = (file, index) => {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const previewItem = document.createElement('div');
-                    previewItem.className = 'preview-item';
-                    previewItem.innerHTML = `
-                        <img src="${e.target.result}" alt="Preview">
-                        <button type="button" class="remove-btn" data-index="${index}" aria-label="Remove image">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    `;
-                    preview.appendChild(previewItem);
-                    
-                    // Add remove button functionality
-                    const removeBtn = previewItem.querySelector('.remove-btn');
-                    removeBtn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        removeFile(index);
-                    });
-                    
-                    resolve();
-                };
-                reader.onerror = (error) => {
-                    console.error('Error reading file:', error);
-                    resolve();
-                };
-                reader.readAsDataURL(file);
-            });
-        };
-        
-        // Process all files sequentially to avoid overwhelming the browser
-        const processAllFiles = async () => {
-            for (let i = 0; i < filesArray.length; i++) {
-                await processFile(filesArray[i], i);
-            }
-            
-            // Update the file input with the filtered files
-            const dataTransfer = new DataTransfer();
-            filesArray.forEach(file => dataTransfer.items.add(file));
-            fileInput.files = dataTransfer.files;
-            
-            console.log('File list updated with', filesArray.length, 'images');
-        };
-        
-        processAllFiles();
-    }
+    });
+    
+    // Update UI
+    updateFileList(filesArray);
+    
+    // Reset input to allow re-selecting same files
+    e.target.value = '';
+}
 
-    // Remove file from selection
-    function removeFile(index) {
-        if (index >= 0 && index < filesArray.length) {
-            // Remove the file from our array
-            filesArray.splice(index, 1);
-            
-            // Update the file input
-            const dataTransfer = new DataTransfer();
-            filesArray.forEach(file => dataTransfer.items.add(file));
-            fileInput.files = dataTransfer.files;
-            
-            // If no files left, reset the input to allow reselecting the same file
-            if (filesArray.length === 0) {
-                fileInput.value = ''; // This allows reselecting the same file
-                if (noFilesMsg) noFilesMsg.style.display = 'block';
-                if (fileList) fileList.classList.add('empty');
-                preview.innerHTML = '';
-            } else {
-                // Update the UI with remaining files
-                updateFileList(filesArray);
+// Handle file drop
+function handleDrop(e) {
+    //console.log('File drop triggered');
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const newFiles = Array.from(e.dataTransfer.files || []);
+    //console.log('Dropped files:', newFiles.length);
+    
+    if (newFiles.length === 0) return;
+    
+    // Filter for image files only
+    const imageFiles = newFiles.filter(file => file.type && file.type.startsWith('image/'));
+    //console.log('Image files dropped:', imageFiles.length);
+    
+    // Add new files to existing array (avoid duplicates)
+    imageFiles.forEach(newFile => {
+        const isDuplicate = filesArray.some(
+            existingFile => 
+                existingFile.name === newFile.name && 
+                existingFile.size === newFile.size
+        );
+        
+        if (!isDuplicate && filesArray.length < 10) {
+            filesArray.push(newFile);
+        }
+    });
+    
+    // Update UI
+    updateFileList(filesArray);
+}
+
+// Update file list and preview
+function updateFileList(files) {
+    //console.log('Updating file list with', files.length, 'files');
+    
+    if (!files || files.length === 0) {
+        filesArray = [];
+        if (fileList) fileList.classList.add('empty');
+        if (noFilesMsg) {
+            noFilesMsg.style.display = 'block';
+            // Update "no files" message with current translation
+            const key = noFilesMsg.getAttribute('data-i18n');
+            if (key && window.i18next && i18next.isInitialized) {
+                noFilesMsg.textContent = i18next.t(key);
             }
         }
+        if (preview) preview.innerHTML = '';
+        if (fileInput) fileInput.value = '';
+        return;
     }
+    
+    // Update files array
+    filesArray = files.filter(file => file && file.type && file.type.startsWith('image/'));
+    //console.log('Filtered files array:', filesArray.length);
+    
+    // Update file count and no-files message
+    if (fileList) {
+        fileList.classList.toggle('empty', filesArray.length === 0);
+    }
+    if (noFilesMsg) {
+        noFilesMsg.style.display = filesArray.length > 0 ? 'none' : 'block';
+    }
+    
+    // Update preview
+    updateFilePreview();
+    
+    // Update the actual file input
+    updateFileInput();
+}
 
-    // Handle form submission
-    function handleFormSubmit(e) {
-        e.preventDefault();
+// Separate function to update just the preview (for better performance)
+function updateFilePreview() {
+    //if (!preview) return;
+    
+    //console.log('Updating file preview');
+    preview.innerHTML = '';
+    
+    filesArray.forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const previewItem = document.createElement('div');
+            previewItem.className = 'preview-item';
+            
+            // Get current translations for accessibility
+            const removeText = (window.i18next && i18next.isInitialized) 
+                ? i18next.t('form.fields.removeImage', 'Remove image') 
+                : 'Remove image';
+            const previewAlt = (window.i18next && i18next.isInitialized) 
+                ? i18next.t('form.fields.previewAlt', 'Image preview') 
+                : 'Image preview';
+            
+            previewItem.innerHTML = `
+                <img src="${e.target.result}" alt="${previewAlt}">
+                <button type="button" class="remove-btn" data-index="${index}" 
+                        aria-label="${removeText}">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            preview.appendChild(previewItem);
+            
+            // Add remove button functionality
+            const removeBtn = previewItem.querySelector('.remove-btn');
+            if (removeBtn) {
+                removeBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    removeFile(index);
+                });
+            }
+        };
         
-        // Reset previous errors
-        document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
-        document.querySelectorAll('.validation-message').forEach(el => el.remove());
+        reader.onerror = (error) => {
+            console.error('Error reading file:', error);
+        };
         
-        // Validate all fields
-        let isValid = true;
-        document.querySelectorAll('[required]').forEach(field => {
+        reader.readAsDataURL(file);
+    });
+}
+
+// Update the file input element with current files
+function updateFileInput() {
+    if (!fileInput) return;
+    
+    try {
+        const dataTransfer = new DataTransfer();
+        filesArray.forEach(file => dataTransfer.items.add(file));
+        fileInput.files = dataTransfer.files;
+        //console.log('File input updated with', fileInput.files.length, 'files');
+    } catch (error) {
+        console.error('Error updating file input:', error);
+    }
+}
+
+// Update translations in file list without re-rendering files
+function updateFileListTranslations() {
+    //console.log('Updating file list translations');
+    
+    // Update "no files" message
+    if (noFilesMsg) {
+        const key = noFilesMsg.getAttribute('data-i18n');
+        if (key && window.i18next && i18next.isInitialized) {
+            noFilesMsg.textContent = i18next.t(key);
+        }
+    }
+    
+    // Update remove button labels in preview
+    const removeButtons = preview ? preview.querySelectorAll('.remove-btn') : [];
+    const removeText = (window.i18next && i18next.isInitialized) 
+        ? i18next.t('form.fields.removeImage', 'Remove image') 
+        : 'Remove image';
+    
+    removeButtons.forEach(btn => {
+        btn.setAttribute('aria-label', removeText);
+    });
+    
+    // Update image alt texts
+    const previewImages = preview ? preview.querySelectorAll('img') : [];
+    const previewAlt = (window.i18next && i18next.isInitialized) 
+        ? i18next.t('form.fields.previewAlt', 'Image preview') 
+        : 'Image preview';
+    
+    previewImages.forEach(img => {
+        img.setAttribute('alt', previewAlt);
+    });
+}
+
+// Remove file from selection
+function removeFile(index) {
+    //console.log('Removing file at index:', index);
+    
+    if (index >= 0 && index < filesArray.length) {
+        // Remove file from array
+        filesArray.splice(index, 1);
+        //console.log('Files remaining:', filesArray.length);
+        
+        // Update UI
+        updateFileList(filesArray);
+    }
+}
+
+// Handle form submission
+async function handleFormSubmit(e) {
+    //console.log('Form submission started');
+    e.preventDefault();
+    
+    // Reset previous errors
+    document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+    document.querySelectorAll('.validation-message').forEach(el => el.remove());
+    
+    // Validate all fields
+    let isValid = true;
+    document.querySelectorAll('[required]').forEach(field => {
+        if (field.id !== 'photos') { // Skip file input, validate separately
             const event = new Event('blur');
             field.dispatchEvent(event);
             if (field.classList.contains('error')) {
                 isValid = false;
             }
-        });
-        
-        // Validate minimum 2 photos
-        const fileCount = fileInput.files.length;
-        if (fileCount < 2) {
-            isValid = false;
-            const fileUpload = document.querySelector('.file-upload');
+        }
+    });
+    
+    // Validate minimum 2 photos
+    const fileCount = filesArray.length;
+    //console.log('File count for validation:', fileCount);
+    
+    if (fileCount < 2) {
+        isValid = false;
+        const fileUpload = document.querySelector('.file-upload');
+        if (fileUpload) {
             fileUpload.classList.add('error');
             
-            // Create and show error message
+            // Create and show error message with translation
             const errorMsg = document.createElement('div');
             errorMsg.className = 'validation-message';
-            errorMsg.textContent = i18next.language === 'fr' ? 
-                'Veuillez télécharger au moins 2 photos' : 
-                i18next.language === 'nl' ?
-                'Upload minimaal 2 foto\'s' :
-                'Please upload at least 2 photos';
+            const errorText = (window.i18next && i18next.isInitialized) 
+                ? i18next.t('validation.minPhotos', { count: 2 }, 'Please upload at least 2 photos')
+                : 'Please upload at least 2 photos';
+            errorMsg.textContent = errorText;
             errorMsg.style.color = '#e53e3e';
             errorMsg.style.marginTop = '5px';
             errorMsg.style.fontSize = '0.8rem';
             
-            const existingError = fileUpload.nextElementSibling;
-            if (!existingError || !existingError.classList.contains('validation-message')) {
-                fileUpload.parentNode.insertBefore(errorMsg, fileUpload.nextSibling);
+            // Remove existing error message if present
+            const existingError = fileUpload.parentNode.querySelector('.validation-message');
+            if (existingError) {
+                existingError.remove();
             }
             
-            if (isValid) {
-                // If this was the only error, scroll to it
-                fileUpload.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
+            fileUpload.parentNode.insertBefore(errorMsg, fileUpload.nextSibling);
+            fileUpload.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        
-        if (!isValid) {
-            // Scroll to first error
-            const firstError = document.querySelector('.error');
-            if (firstError) {
-                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-            return;
+    }
+    
+    if (!isValid) {
+        //console.log('Form validation failed');
+        // Scroll to first error
+        const firstError = document.querySelector('.error');
+        if (firstError) {
+            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        
-        // Show loading state
-        const submitBtn = document.getElementById('submit-btn');
+        return;
+    }
+    
+    // Show loading state
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    if (submitBtn) {
         const originalBtnText = submitBtn.innerHTML;
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + submitBtn.textContent.trim();
+        submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${submitBtn.textContent.trim()}`;
         
         try {
-            // If we have files to upload, we need to handle the submission with JavaScript
-            if (fileInput.files.length > 0) {
-                const formData = new FormData(form);
-                
-                // Append files to the form data
-                Array.from(fileInput.files).forEach((file, index) => {
-                    formData.append(`file${index}`, file);
-                });
-                
-                // Get current language
-                const currentLang = document.documentElement.lang || 'en';
-                
-                // Submit the form data to Netlify
-                fetch('/', {
-                    method: 'POST',
-                    body: formData,
-                })
-                .then(response => {
-                    if (response.ok) {
-                        // Redirect to success page with language parameter
-                        window.location.href = `/success.html?lang=${currentLang}`;
-                    } else {
-                        throw new Error('Form submission failed');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('There was an error submitting the form. Please try again.');
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalBtnText;
-                });
-            } else {
-                // If no files, let Netlify handle the form submission normally
-                form.submit();
+            const formData = new FormData(form);
+            
+            // Clear any existing file data and add current files
+            formData.delete('photos[]');
+            formData.delete('photos');
+            
+            //console.log('Adding', filesArray.length, 'files to form data');
+            filesArray.forEach((file, index) => {
+                formData.append('photos[]', file);
+                //console.log(`Added file ${index + 1}:`, file.name, file.size, 'bytes');
+            });
+            
+            // Add file count for server-side validation
+            formData.append('fileCount', filesArray.length.toString());
+            
+            // Add current language
+            formData.append('language', currentLanguage);
+            
+            // Debug: Log form data
+            //console.log('Form data entries:');
+            for (let pair of formData.entries()) {
+                if (pair[1] instanceof File) {
+                    //console.log(pair[0], `[File: ${pair[1].name}, ${pair[1].size} bytes]`);
+                } else {
+                    //console.log(pair[0], pair[1]);
+                }
             }
+            
+            // Submit to Netlify
+            const response = await fetch('/', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                //console.log('Form submitted successfully');
+                // Redirect to success page with language parameter
+                window.location.href = `/success.html?lang=${currentLanguage}`;
+            } else {
+                throw new Error(`Form submission failed: ${response.status} ${response.statusText}`);
+            }
+            
         } catch (error) {
-            console.error('Error:', error);
-            // Fallback to default form submission if JavaScript fails
-            form.submit();
+            //console.error('Form submission error:', error);
+            alert('There was an error submitting the form. Please try again.');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
         }
     }
+}
 
-    // Drag and drop helpers
-    function preventDefaults(e) {
-        e.preventDefault();
-        e.stopPropagation();
-    }
+// Drag and drop helper functions
+function preventDefaults(e) {
+    e.preventDefault();
+    e.stopPropagation();
+}
 
-    function highlight() {
-        if (dropZone) dropZone.classList.add('highlight');
-    }
+function highlight() {
+    if (dropZone) dropZone.classList.add('highlight');
+}
 
-    function unhighlight() {
-        if (dropZone) dropZone.classList.remove('highlight');
-    }
-
-    // Initialize tooltips
-    function initTooltips() {
-        // Add any tooltip initialization code here
-    }
-
-    // Add animation to form sections
-    const formSections = document.querySelectorAll('.form-section');
-    formSections.forEach((section, index) => {
-        section.style.animationDelay = `${index * 0.1}s`;
-    });
-});
+function unhighlight() {
+    if (dropZone) dropZone.classList.remove('highlight');
+}
