@@ -478,46 +478,14 @@ async function handleFormSubmit(e) {
         submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${submitBtn.textContent.trim()}`;
         
         try {
-            // For Netlify forms, we need to let the form submit naturally
-            // after we've validated everything and prepared the files
+            // Update the file input with the current files using DataTransfer
+            const dataTransfer = new DataTransfer();
+            filesArray.forEach(file => dataTransfer.items.add(file));
+            fileInput.files = dataTransfer.files;
             
-            // Create a new FormData object from the form
-            const formData = new FormData(form);
-            
-            // Clear any existing files in the form data
-            formData.delete('photos');
-            
-            // Add each file to the form data
-            filesArray.forEach((file, index) => {
-                formData.append('photos', file, file.name);
-            });
-            
-            // Ensure form-name is set for Netlify
-            if (!formData.has('form-name')) {
-                formData.append('form-name', 'sell-car');
-            }
-            
+            // Let Netlify handle the form submission
             console.log('Submitting form to Netlify with', filesArray.length, 'files...');
-            
-            // Submit the form using fetch
-            try {
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/x-www-form-urlencoded',
-                    },
-                    mode: 'no-cors' // Important for Netlify forms
-                });
-                
-                // Redirect to success page after successful submission
-                window.location.href = '/success.html';
-            } catch (error) {
-                console.error('Error submitting form:', error);
-                alert('There was an error submitting the form. Please try again.');
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnText;
-            }
+            return true; // Allow form to submit naturally
             
         } catch (error) {
             console.error('Form submission error:', error);
