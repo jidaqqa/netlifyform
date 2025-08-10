@@ -151,6 +151,12 @@ function handleFormSubmit(e) {
         submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${submitBtn.textContent.trim()}`;
     }
     
+    // Update form action to include language parameter
+    const currentLang = i18next.language || 'en';
+    const successUrl = new URL('/success.html', window.location.origin);
+    successUrl.searchParams.set('lang', currentLang);
+    e.target.action = successUrl.toString();
+    
     // Let the form submit naturally
     return true;
 }
