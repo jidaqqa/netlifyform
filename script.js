@@ -1,5 +1,5 @@
 // Global state
-let currentLanguage = document.documentElement.lang || 'en';
+let currentLanguage = document.documentElement.lang || 'nl';
 
 // DOM Elements
 let form, submitBtn, languageSelector, selectedFlag;
@@ -59,6 +59,8 @@ function initEventListeners() {
 // Update flag emoji based on selected language
 function updateFlag(lang) {
     const flagMap = {
+        fallbackLng: 'nl',
+        lng: 'nl', // Set Dutch as the default language
         'en': '🇬🇧',
         'fr': '🇫🇷',
         'nl': '🇳🇱'
