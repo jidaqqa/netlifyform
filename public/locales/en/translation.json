@@ -1,7 +1,7 @@
 {
   "form": {
     "title": "Sell Your Car Fast & Get Paid Instantly",
-    "logo": "Premium Motors",
+    "logo": "Wij Kopen Auto's",
     "trustBadge": "Trusted Dealer",
     "subtitle": "Complete our simple form below and receive a competitive offer within minutes. No hidden fees, no obligations.",
     "benefits": [
@@ -58,7 +58,7 @@
     "securityNotice": "Your information is secure and will never be shared with third parties."
   },
   "success": {
-    "pageTitle": "Thank You! | Premium Motors",
+    "pageTitle": "Thank You! | Wij Kopen Auto's",
     "title": "Thank You!",
     "subtitle": "We've Received Your Details",
     "message": "Our team will review your car information and contact you within <strong>a few hours</strong> with an offer.",

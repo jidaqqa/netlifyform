@@ -1,7 +1,7 @@
 {
   "form": {
     "title": "Vendez Votre Voiture Rapidement & Sans Tracas",
-    "logo": "Premium Motors",
+    "logo": "Wij Kopen Auto's",
     "trustBadge": "Vendeur de Confiance",
     "subtitle": "Complétez notre formulaire simple ci-dessous et recevez une offre compétitive en quelques minutes. Pas de frais cachés, pas d'obligation.",
     "benefits": [
@@ -58,7 +58,7 @@
     "securityNotice": "Votre information est sécurisée et ne sera jamais partagée avec des tiers."
   },
   "success": {
-    "pageTitle": "Merci ! | Premium Motors",
+    "pageTitle": "Merci ! | Wij Kopen Auto's",
     "title": "Merci !",
     "subtitle": "Nous avons bien reçu vos informations",
     "message": "Notre équipe va examiner les informations de votre voiture et vous contactera dans <strong>quelques heures</strong> avec une offre.",
