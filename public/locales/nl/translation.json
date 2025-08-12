@@ -1,5 +1,46 @@
 {
   "form": {
+    "dropdowns": {
+      "selectBrand": "Selecteer merk",
+      "selectYear": "Selecteer bouwjaar",
+      "selectCondition": "Selecteer staat",
+      "selectTransmission": "Selecteer transmissie",
+      "selectFuelType": "Selecteer brandstoftype",
+      "brands": {
+        "Toyota": "Toyota",
+        "Honda": "Honda",
+        "BMW": "BMW",
+        "Mercedes": "Mercedes",
+        "Audi": "Audi",
+        "Ford": "Ford",
+        "Volkswagen": "Volkswagen",
+        "Hyundai": "Hyundai",
+        "Kia": "Kia",
+        "Nissan": "Nissan",
+        "Other": "Anders"
+      },
+      "conditions": {
+        "New": "Nieuw",
+        "Excellent": "Uitstekend",
+        "Good": "Goed",
+        "Fair": "Redelijk",
+        "Poor": "Matig"
+      },
+      "transmissions": {
+        "Automatic": "Automaat",
+        "Manual": "Handmatig",
+        "Semi-Automatic": "Halfautomatisch",
+        "CVT": "CVT"
+      },
+      "fuelTypes": {
+        "Petrol": "Benzine",
+        "Diesel": "Diesel",
+        "Hybrid": "Hybride",
+        "Electric": "Elektrisch",
+        "LPG": "LPG",
+        "CNG": "CNG"
+      }
+    },
     "title": "Uw Auto Snel en Moeiteloos Verkopen",
     "logo": "Wij Kopen Auto's",
     "trustBadge": "Vertrouwde Handelaar",

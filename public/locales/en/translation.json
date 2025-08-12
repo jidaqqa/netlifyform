@@ -1,6 +1,47 @@
 {
   "form": {
     "title": "Sell Your Car Fast & Get Paid Instantly",
+    "dropdowns": {
+      "selectBrand": "Select Brand",
+      "selectYear": "Select Year",
+      "selectCondition": "Select Condition",
+      "selectTransmission": "Select Transmission",
+      "selectFuelType": "Select Fuel Type",
+      "brands": {
+        "Toyota": "Toyota",
+        "Honda": "Honda",
+        "BMW": "BMW",
+        "Mercedes": "Mercedes",
+        "Audi": "Audi",
+        "Ford": "Ford",
+        "Volkswagen": "Volkswagen",
+        "Hyundai": "Hyundai",
+        "Kia": "Kia",
+        "Nissan": "Nissan",
+        "Other": "Other"
+      },
+      "conditions": {
+        "New": "New",
+        "Excellent": "Excellent",
+        "Good": "Good",
+        "Fair": "Fair",
+        "Poor": "Poor"
+      },
+      "transmissions": {
+        "Automatic": "Automatic",
+        "Manual": "Manual",
+        "Semi-Automatic": "Semi-Automatic",
+        "CVT": "CVT"
+      },
+      "fuelTypes": {
+        "Petrol": "Petrol",
+        "Diesel": "Diesel",
+        "Hybrid": "Hybrid",
+        "Electric": "Electric",
+        "LPG": "LPG",
+        "CNG": "CNG"
+      }
+    },
     "logo": "Wij Kopen Auto's",
     "trustBadge": "Trusted Dealer",
     "subtitle": "Complete our simple form below and receive a competitive offer within minutes. No hidden fees, no obligations.",

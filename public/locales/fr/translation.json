@@ -1,5 +1,46 @@
 {
   "form": {
+    "dropdowns": {
+      "selectBrand": "Sélectionnez une marque",
+      "selectYear": "Sélectionnez l'année",
+      "selectCondition": "Sélectionnez l'état",
+      "selectTransmission": "Sélectionnez la transmission",
+      "selectFuelType": "Sélectionnez le type de carburant",
+      "brands": {
+        "Toyota": "Toyota",
+        "Honda": "Honda",
+        "BMW": "BMW",
+        "Mercedes": "Mercedes",
+        "Audi": "Audi",
+        "Ford": "Ford",
+        "Volkswagen": "Volkswagen",
+        "Hyundai": "Hyundai",
+        "Kia": "Kia",
+        "Nissan": "Nissan",
+        "Other": "Autre"
+      },
+      "conditions": {
+        "New": "Neuf",
+        "Excellent": "Excellent",
+        "Good": "Bon",
+        "Fair": "Correct",
+        "Poor": "Médiocre"
+      },
+      "transmissions": {
+        "Automatic": "Automatique",
+        "Manual": "Manuelle",
+        "Semi-Automatic": "Semi-automatique",
+        "CVT": "CVT"
+      },
+      "fuelTypes": {
+        "Petrol": "Essence",
+        "Diesel": "Diesel",
+        "Hybrid": "Hybride",
+        "Electric": "Électrique",
+        "LPG": "GPL",
+        "CNG": "GNV"
+      }
+    },
     "title": "Vendez Votre Voiture Rapidement & Sans Tracas",
     "logo": "Wij Kopen Auto's",
     "trustBadge": "Vendeur de Confiance",
