@@ -34,14 +34,18 @@
       "browseFiles": "of klik om bestanden te doorzoeken",
       "selectPhotos": "Foto's selecteren",
       "noFiles": "Geen bestanden geselecteerd",
+      "photoSingular": "foto",
+      "photoPlural": "foto's",
+      "failed": "mislukt",
+      "uploaded": "geüpload",
       "photoTips": "Fototips",
-      "tips": [
-        "Maak foto's bij goed licht",
-        "Maak foto's van alle hoeken van de auto",
-        "Neem close-ups van eventuele schade op",
-        "Toon het interieur en het dashboard",
-        "Zorg ervoor dat de kentekenplaat zichtbaar is"
-      ],
+      "tips": {
+        "0": "Maak foto's bij goed licht (daglicht is het beste)",
+        "1": "Voeg buitenopnamen toe vanuit alle hoeken (voor, achter, zijkanten)",
+        "2": "Toon het interieur, inclusief stoelen en dashboard",
+        "3": "Leg eventuele schade of slijtage duidelijk vast",
+        "4": "Voeg foto's toe van de kilometerteller en speciale functies"
+      },
       "namePlaceholder": "Jan Jansen",
       "phonePlaceholder": "+31 6 12345678",
       "emailPlaceholder": "uw.email@voorbeeld.nl",
@@ -53,7 +57,8 @@
       "notesPlaceholder": "Vertel ons over speciale functies, recent onderhoud of problemen met het voertuig..."
     },
     "buttons": {
-      "submit": "Verzenden"
+      "submit": "Verzenden",
+      "retryFailed": "Mislukte Uploads Opnieuw Proberen"
     },
     "securityNotice": "Uw informatie is veilig en zal nooit met derden gedeeld worden."
   },
