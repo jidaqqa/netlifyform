@@ -9,6 +9,9 @@
       "Geen verborgen kosten",
       "Gratis afhalen van uw auto"
     ],
+    "errors": {
+      "minImages": "Upload minimaal {{count}} afbeeldingen."
+    },
     "sections": {
       "vehicle": "Voertuiginformatie",
       "vehicleDescription": "Vertel ons over uw auto voor een nauwkeurige waardering.",

@@ -299,6 +299,15 @@ function formatFileSize(bytes) {
 async function handleFormSubmit(e) {
     e.preventDefault(); // Always prevent default first
     
+    if (selectedFiles.length < 2) {
+        // Use i18n for the error message
+        const errorMessage = i18next.t('form.errors.minImages', { count: 2 }) || `Please upload at least 2 images.`;
+        showStatus(errorMessage, 'error');
+        resetSubmitButton();
+        isSubmitting = false;
+        return false;
+    }
+
     if (isSubmitting) {
         console.log('Form already being submitted, ignoring');
         return false;
@@ -514,12 +523,26 @@ function validateForm() {
         }
     });
     
+    // Check for minimum 2 images
+    const minImages = 2;
+    if (selectedFiles.length < minImages) {
+        isValid = false;
+        const fileUploadArea = document.getElementById('file-upload-area');
+        if (fileUploadArea) {
+            fileUploadArea.classList.add('error');
+            const errorMsg = document.createElement('div');
+            errorMsg.className = 'validation-message';
+            errorMsg.textContent = `Please upload at least ${minImages} images of your vehicle.`;
+            fileUploadArea.parentNode.insertBefore(errorMsg, fileUploadArea.nextSibling);
+        }
+    }
+    
     if (!isValid) {
         const firstError = document.querySelector('.error');
         if (firstError) {
             firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        showStatus('Please fill in all required fields.', 'error');
+        showStatus(`Please fill in all required fields and upload at least ${minImages} images.`, 'error');
     }
     
     return isValid;
@@ -528,7 +551,9 @@ function validateForm() {
 function resetSubmitButton() {
     if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.innerHTML = `<i class="fas fa-paper-plane"></i> <span data-i18n="form.buttons.submit">Submit</span>`;
+        // Use i18n for the button text instead of hardcoded English
+        const submitText = i18next.t('form.buttons.submit') || 'Submit Form';
+        submitBtn.innerHTML = `<i class="fas fa-paper-plane"></i> <span>${submitText}</span>`;
     }
 }
 
