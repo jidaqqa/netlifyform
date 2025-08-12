@@ -335,11 +335,12 @@ async function handleFormSubmit(e) {
         }
     }
     
-    // Update hidden field with uploaded URLs
+    // Update hidden field with uploaded URLs, each on a new line
     const hiddenField = document.getElementById('vehicle-images');
     if (hiddenField) {
-        hiddenField.value = JSON.stringify(uploadedImageUrls);
-        console.log('Updated hidden field with', uploadedImageUrls.length, 'image URLs');
+        // Join the array with newline characters
+        hiddenField.value = uploadedImageUrls.join('\n');
+        console.log('Updated hidden field with', uploadedImageUrls.length, 'image URLs, one per line');
     }
     
     // Update form action with language
