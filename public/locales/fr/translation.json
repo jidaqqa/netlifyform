@@ -94,7 +94,27 @@
       "notesPlaceholder": "Parlez-nous des caractéristiques spéciales, de l'entretien récent ou des problèmes du véhicule..."
     },
     "buttons": {
-      "submit": "Soumettre"
+      "submit": "Soumettre",
+      "retryFailed": "Réessayer les échecs"
+    },
+    "upload": {
+      "maxFilesError": "Maximum {{maxFiles}} photos autorisées. Vous pouvez en ajouter {{remaining}} de plus.",
+      "invalidTypeError": "Le fichier {{fileName}} n'est pas un type d'image valide. Veuillez utiliser JPG, PNG ou WebP.",
+      "fileTooLargeError": "Le fichier {{fileName}} est trop volumineux. La taille maximale est de {{maxSize}} Mo.",
+      "duplicateFileError": "Le fichier {{fileName}} est déjà sélectionné.",
+      "addedFilesSuccess": "{{count}} fichier(s) ajouté(s). Total : {{total}}",
+      "uploadingStatus": "Téléversement {{current}} sur {{total}} fichiers...",
+      "uploadComplete": "Tous les fichiers ont été téléversés avec succès !",
+      "uploadFailed": "Échec du téléversement de certains fichiers. Veuillez réessayer.",
+      "removeFile": "Supprimer",
+      "uploadingFile": "Téléversement en cours...",
+      "uploadCompleteFile": "Terminé",
+      "uploadFailedFile": "Échec",
+      "fileSummary": {
+        "single": "1 photo sélectionnée (prêt à être téléversé)",
+        "multiple": "{{count}} photos sélectionnées (prêtes à être téléversées)",
+        "fileRemoved": "{{fileName}} supprimé"
+      }
     },
     "securityNotice": "Votre information est sécurisée et ne sera jamais partagée avec des tiers."
   },

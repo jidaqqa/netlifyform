@@ -152,7 +152,13 @@ function addFilesToSelection(files) {
     
     // Check if adding these files would exceed the limit
     if (selectedFiles.length + files.length > maxFiles) {
-        showStatus(`Maximum ${maxFiles} photos allowed. You can add ${maxFiles - selectedFiles.length} more.`, 'error');
+        const remaining = maxFiles - selectedFiles.length;
+        const message = i18next.t('form.upload.maxFilesError', { 
+            maxFiles, 
+            remaining,
+            defaultValue: `Maximum ${maxFiles} photos allowed. You can add ${remaining} more.`
+        });
+        showStatus(message, 'error');
         return;
     }
 
@@ -164,13 +170,23 @@ function addFilesToSelection(files) {
         
         // Check file type
         if (!allowedTypes.includes(file.type)) {
-            showStatus(`File ${file.name} is not a valid image type. Please use JPG, PNG, or WebP.`, 'error');
+            const message = i18next.t('form.upload.invalidTypeError', { 
+                fileName: file.name,
+                defaultValue: `File ${file.name} is not a valid image type. Please use JPG, PNG, or WebP.`
+            });
+            showStatus(message, 'error');
             continue;
         }
         
         // Check file size
         if (file.size > maxSize) {
-            showStatus(`File ${file.name} is too large. Maximum size is 10MB.`, 'error');
+            const maxSizeMB = maxSize / (1024 * 1024);
+            const message = i18next.t('form.upload.fileTooLargeError', { 
+                fileName: file.name,
+                maxSize: maxSizeMB,
+                defaultValue: `File ${file.name} is too large. Maximum size is ${maxSizeMB}MB.`
+            });
+            showStatus(message, 'error');
             continue;
         }
         
@@ -180,7 +196,11 @@ function addFilesToSelection(files) {
         );
         
         if (isDuplicate) {
-            showStatus(`File ${file.name} is already selected.`, 'warning');
+            const message = i18next.t('form.upload.duplicateFileError', { 
+                fileName: file.name,
+                defaultValue: `File ${file.name} is already selected.`
+            });
+            showStatus(message, 'warning');
             continue;
         }
         
@@ -197,7 +217,12 @@ function addFilesToSelection(files) {
         validFiles.forEach(file => createFilePreview(file));
         
         updateFileSummary();
-        showStatus(`Added ${validFiles.length} file(s). Total: ${selectedFiles.length}`, 'success');
+        const message = i18next.t('form.upload.addedFilesSuccess', { 
+            count: validFiles.length, 
+            total: selectedFiles.length,
+            defaultValue: `Added ${validFiles.length} file(s). Total: ${selectedFiles.length}`
+        });
+        showStatus(message, 'success');
     }
 }
 
@@ -262,7 +287,12 @@ function removeFileFromSelection(previewId, fileToRemove) {
     }
     
     updateFileSummary();
-    showStatus(`Removed ${fileToRemove.name}`, 'info');
+    
+    const removedMessage = i18next.t('form.upload.fileSummary.fileRemoved', {
+        fileName: fileToRemove.name,
+        defaultValue: `Removed ${fileToRemove.name}`
+    });
+    showStatus(removedMessage, 'info');
 }
 
 function updateFileSummary() {
@@ -274,9 +304,14 @@ function updateFileSummary() {
             
             let countText;
             if (totalFiles === 1) {
-                countText = `1 photo selected (ready to upload)`;
+                countText = i18next.t('form.upload.fileSummary.single', {
+                    defaultValue: '1 photo selected (ready to upload)'
+                });
             } else {
-                countText = `${totalFiles} photos selected (ready to upload)`;
+                countText = i18next.t('form.upload.fileSummary.multiple', {
+                    count: totalFiles,
+                    defaultValue: `${totalFiles} photos selected (ready to upload)`
+                });
             }
             
             imageCount.textContent = countText;
@@ -392,7 +427,12 @@ async function uploadAllImages() {
                 if (statusEl) statusEl.textContent = 'Uploading...';
             }
             
-            showStatus(`Uploading ${file.name}... (${i + 1}/${selectedFiles.length})`, 'info');
+            const uploadingMessage = i18next.t('form.upload.uploadingStatus', {
+                current: i + 1,
+                total: selectedFiles.length,
+                defaultValue: `Uploading ${i + 1} of ${selectedFiles.length} files...`
+            });
+            showStatus(uploadingMessage, 'info');
             
             const cloudinaryUrl = await uploadToCloudinary(file, (progress) => {
                 updateProgressBar(((i * 100) + progress) / selectedFiles.length);
@@ -421,7 +461,10 @@ async function uploadAllImages() {
                 if (statusEl) statusEl.textContent = 'Upload failed ✗';
             }
             
-            showStatus(`Failed to upload ${file.name}: ${error.message}`, 'error');
+            const failMessage = i18next.t('form.upload.uploadFailed', {
+                defaultValue: 'Failed to upload some files. Please try again.'
+            });
+            showStatus(failMessage, 'error');
         }
         
         updateProgressBar(((i + 1) * 100) / selectedFiles.length);
@@ -452,7 +495,10 @@ async function uploadAllImages() {
     }
     
     if (successCount > 0) {
-        showStatus(`Successfully uploaded ${successCount} image(s)!`, 'success');
+        const successMessage = i18next.t('form.upload.uploadComplete', {
+            defaultValue: 'All files uploaded successfully!'
+        });
+        showStatus(successMessage, 'success');
     }
     
     return uploadedUrls;

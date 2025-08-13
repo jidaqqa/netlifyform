@@ -104,6 +104,25 @@
       "submit": "Verzenden",
       "retryFailed": "Mislukte Uploads Opnieuw Proberen"
     },
+    "upload": {
+      "maxFilesError": "Maximaal {{maxFiles}} foto's toegestaan. U kunt er nog {{remaining}} toevoegen.",
+      "invalidTypeError": "Bestand {{fileName}} is geen geldig afbeeldingstype. Gebruik alstublieft JPG, PNG of WebP.",
+      "fileTooLargeError": "Bestand {{fileName}} is te groot. Maximale grootte is {{maxSize}}MB.",
+      "duplicateFileError": "Bestand {{fileName}} is al geselecteerd.",
+      "addedFilesSuccess": "{{count}} bestand(en) toegevoegd. Totaal: {{total}}",
+      "uploadingStatus": "Bezig met uploaden {{current}} van {{total}} bestanden...",
+      "uploadComplete": "Alle bestanden succesvol geüpload!",
+      "uploadFailed": "Niet alle bestanden konden worden geüpload. Probeer het opnieuw.",
+      "removeFile": "Verwijderen",
+      "uploadingFile": "Bezig met uploaden...",
+      "uploadCompleteFile": "Geüpload",
+      "uploadFailedFile": "Mislukt",
+      "fileSummary": {
+        "single": "1 foto geselecteerd (klaar om te uploaden)",
+        "multiple": "{{count}} foto's geselecteerd (klaar om te uploaden)",
+        "fileRemoved": "{{fileName}} verwijderd"
+      }
+    },
     "securityNotice": "Uw informatie is veilig en zal nooit met derden gedeeld worden."
   },
   "success": {

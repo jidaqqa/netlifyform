@@ -96,6 +96,25 @@
     "buttons": {
       "submit": "Submit"
     },
+    "upload": {
+      "maxFilesError": "Maximum {{maxFiles}} photos allowed. You can add {{remaining}} more.",
+      "invalidTypeError": "File {{fileName}} is not a valid image type. Please use JPG, PNG, or WebP.",
+      "fileTooLargeError": "File {{fileName}} is too large. Maximum size is {{maxSize}}MB.",
+      "duplicateFileError": "File {{fileName}} is already selected.",
+      "addedFilesSuccess": "Added {{count}} file(s). Total: {{total}}",
+      "uploadingStatus": "Uploading {{current}} of {{total}} files...",
+      "uploadComplete": "All files uploaded successfully!",
+      "uploadFailed": "Failed to upload some files. Please try again.",
+      "removeFile": "Remove",
+      "uploadingFile": "Uploading...",
+      "uploadCompleteFile": "Uploaded",
+      "uploadFailedFile": "Failed",
+      "fileSummary": {
+        "single": "1 photo selected (ready to upload)",
+        "multiple": "{{count}} photos selected (ready to upload)",
+        "fileRemoved": "Removed {{fileName}}"
+      }
+    },
     "securityNotice": "Your information is secure and will never be shared with third parties."
   },
   "success": {
