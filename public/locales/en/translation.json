@@ -1,6 +1,47 @@
 {
   "form": {
     "title": "Sell Your Car Fast & Get Paid Instantly",
+    "dropdowns": {
+      "selectBrand": "Select Brand",
+      "selectYear": "Select Year",
+      "selectCondition": "Select Condition",
+      "selectTransmission": "Select Transmission",
+      "selectFuelType": "Select Fuel Type",
+      "brands": {
+        "Toyota": "Toyota",
+        "Honda": "Honda",
+        "BMW": "BMW",
+        "Mercedes": "Mercedes",
+        "Audi": "Audi",
+        "Ford": "Ford",
+        "Volkswagen": "Volkswagen",
+        "Hyundai": "Hyundai",
+        "Kia": "Kia",
+        "Nissan": "Nissan",
+        "Other": "Other"
+      },
+      "conditions": {
+        "New": "New",
+        "Excellent": "Excellent",
+        "Good": "Good",
+        "Fair": "Fair",
+        "Poor": "Poor"
+      },
+      "transmissions": {
+        "Automatic": "Automatic",
+        "Manual": "Manual",
+        "Semi-Automatic": "Semi-Automatic",
+        "CVT": "CVT"
+      },
+      "fuelTypes": {
+        "Petrol": "Petrol",
+        "Diesel": "Diesel",
+        "Hybrid": "Hybrid",
+        "Electric": "Electric",
+        "LPG": "LPG",
+        "CNG": "CNG"
+      }
+    },
     "logo": "Wij Kopen Auto's",
     "trustBadge": "Trusted Dealer",
     "subtitle": "Complete our simple form below and receive a competitive offer within minutes. No hidden fees, no obligations.",
@@ -53,7 +94,27 @@
       "notesPlaceholder": "Tell us about any special features, recent maintenance, or issues with the vehicle..."
     },
     "buttons": {
-      "submit": "Submit"
+      "submit": "Submit",
+      "processing": "Processing..."
+    },
+    "upload": {
+      "maxFilesError": "Maximum {{maxFiles}} photos allowed. You can add {{remaining}} more.",
+      "invalidTypeError": "File {{fileName}} is not a valid image type. Please use JPG, PNG, or WebP.",
+      "fileTooLargeError": "File {{fileName}} is too large. Maximum size is {{maxSize}}MB.",
+      "duplicateFileError": "File {{fileName}} is already selected.",
+      "addedFilesSuccess": "Added {{count}} file(s). Total: {{total}}",
+      "uploadingStatus": "Uploading {{current}} of {{total}} files...",
+      "uploadComplete": "All files uploaded successfully!",
+      "uploadFailed": "Failed to upload some files. Please try again.",
+      "removeFile": "Remove",
+      "uploadingFile": "Uploading...",
+      "uploadCompleteFile": "Uploaded",
+      "uploadFailedFile": "Failed",
+      "fileSummary": {
+        "single": "1 photo selected (ready to upload)",
+        "multiple": "{{count}} photos selected (ready to upload)",
+        "fileRemoved": "Removed {{fileName}}"
+      }
     },
     "securityNotice": "Your information is secure and will never be shared with third parties."
   },

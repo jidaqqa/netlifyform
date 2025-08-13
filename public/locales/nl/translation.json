@@ -1,5 +1,46 @@
 {
   "form": {
+    "dropdowns": {
+      "selectBrand": "Selecteer merk",
+      "selectYear": "Selecteer bouwjaar",
+      "selectCondition": "Selecteer staat",
+      "selectTransmission": "Selecteer transmissie",
+      "selectFuelType": "Selecteer brandstoftype",
+      "brands": {
+        "Toyota": "Toyota",
+        "Honda": "Honda",
+        "BMW": "BMW",
+        "Mercedes": "Mercedes",
+        "Audi": "Audi",
+        "Ford": "Ford",
+        "Volkswagen": "Volkswagen",
+        "Hyundai": "Hyundai",
+        "Kia": "Kia",
+        "Nissan": "Nissan",
+        "Other": "Anders"
+      },
+      "conditions": {
+        "New": "Nieuw",
+        "Excellent": "Uitstekend",
+        "Good": "Goed",
+        "Fair": "Redelijk",
+        "Poor": "Matig"
+      },
+      "transmissions": {
+        "Automatic": "Automaat",
+        "Manual": "Handmatig",
+        "Semi-Automatic": "Halfautomatisch",
+        "CVT": "CVT"
+      },
+      "fuelTypes": {
+        "Petrol": "Benzine",
+        "Diesel": "Diesel",
+        "Hybrid": "Hybride",
+        "Electric": "Elektrisch",
+        "LPG": "LPG",
+        "CNG": "CNG"
+      }
+    },
     "title": "Uw Auto Snel en Moeiteloos Verkopen",
     "logo": "Wij Kopen Auto's",
     "trustBadge": "Vertrouwde Handelaar",
@@ -9,6 +50,9 @@
       "Geen verborgen kosten",
       "Gratis afhalen van uw auto"
     ],
+    "errors": {
+      "minImages": "Upload minimaal {{count}} afbeeldingen."
+    },
     "sections": {
       "vehicle": "Voertuiginformatie",
       "vehicleDescription": "Vertel ons over uw auto voor een nauwkeurige waardering.",
@@ -34,14 +78,18 @@
       "browseFiles": "of klik om bestanden te doorzoeken",
       "selectPhotos": "Foto's selecteren",
       "noFiles": "Geen bestanden geselecteerd",
+      "photoSingular": "foto",
+      "photoPlural": "foto's",
+      "failed": "mislukt",
+      "uploaded": "geüpload",
       "photoTips": "Fototips",
-      "tips": [
-        "Maak foto's bij goed licht",
-        "Maak foto's van alle hoeken van de auto",
-        "Neem close-ups van eventuele schade op",
-        "Toon het interieur en het dashboard",
-        "Zorg ervoor dat de kentekenplaat zichtbaar is"
-      ],
+      "tips": {
+        "0": "Maak foto's bij goed licht (daglicht is het beste)",
+        "1": "Voeg buitenopnamen toe vanuit alle hoeken (voor, achter, zijkanten)",
+        "2": "Toon het interieur, inclusief stoelen en dashboard",
+        "3": "Leg eventuele schade of slijtage duidelijk vast",
+        "4": "Voeg foto's toe van de kilometerteller en speciale functies"
+      },
       "namePlaceholder": "Jan Jansen",
       "phonePlaceholder": "+31 6 12345678",
       "emailPlaceholder": "uw.email@voorbeeld.nl",
@@ -53,7 +101,28 @@
       "notesPlaceholder": "Vertel ons over speciale functies, recent onderhoud of problemen met het voertuig..."
     },
     "buttons": {
-      "submit": "Verzenden"
+      "submit": "Verzenden",
+      "retryFailed": "Mislukte Uploads Opnieuw Proberen",
+      "processing": "Verwerken..."
+    },
+    "upload": {
+      "maxFilesError": "Maximaal {{maxFiles}} foto's toegestaan. U kunt er nog {{remaining}} toevoegen.",
+      "invalidTypeError": "Bestand {{fileName}} is geen geldig afbeeldingstype. Gebruik alstublieft JPG, PNG of WebP.",
+      "fileTooLargeError": "Bestand {{fileName}} is te groot. Maximale grootte is {{maxSize}}MB.",
+      "duplicateFileError": "Bestand {{fileName}} is al geselecteerd.",
+      "addedFilesSuccess": "{{count}} bestand(en) toegevoegd. Totaal: {{total}}",
+      "uploadingStatus": "Bezig met uploaden {{current}} van {{total}} bestanden...",
+      "uploadComplete": "Alle bestanden succesvol geüpload!",
+      "uploadFailed": "Niet alle bestanden konden worden geüpload. Probeer het opnieuw.",
+      "removeFile": "Verwijderen",
+      "uploadingFile": "Bezig met uploaden...",
+      "uploadCompleteFile": "Geüpload",
+      "uploadFailedFile": "Mislukt",
+      "fileSummary": {
+        "single": "1 foto geselecteerd (klaar om te uploaden)",
+        "multiple": "{{count}} foto's geselecteerd (klaar om te uploaden)",
+        "fileRemoved": "{{fileName}} verwijderd"
+      }
     },
     "securityNotice": "Uw informatie is veilig en zal nooit met derden gedeeld worden."
   },

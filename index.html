@@ -56,6 +56,103 @@
                 });
             });
 
+        // Update year dropdown with current year range
+        function updateYearDropdown() {
+            const yearSelect = document.getElementById('year');
+            if (!yearSelect) return;
+            
+            // Save selected value
+            const selectedYear = yearSelect.value;
+            
+            // Clear existing options except the first one
+            while (yearSelect.options.length > 1) {
+                yearSelect.remove(1);
+            }
+            
+            // Get current year
+            const currentYear = new Date().getFullYear();
+            const startYear = 2000;
+            
+            // Add years from current year to start year
+            for (let year = currentYear + 1; year >= startYear; year--) {
+                const option = new Option(year.toString(), year.toString());
+                yearSelect.add(option);
+            }
+            
+            // Restore selected value if it still exists
+            if (selectedYear && Array.from(yearSelect.options).some(opt => opt.value === selectedYear)) {
+                yearSelect.value = selectedYear;
+            }
+            
+            // Update the default option text
+            const defaultOption = yearSelect.options[0];
+            if (defaultOption) {
+                defaultOption.textContent = i18next.t('form.dropdowns.selectYear');
+            }
+        }
+
+        // Update dropdown options with translations
+        function updateDropdowns() {
+            // Update car makes dropdown
+            const makeSelect = document.getElementById('maker');
+            if (makeSelect) {
+                // Save selected value
+                const selectedMake = makeSelect.value;
+                
+                // Clear existing options except the first one
+                while (makeSelect.options.length > 1) {
+                    makeSelect.remove(1);
+                }
+                
+                // Add translated options
+                const brands = i18next.t('form.dropdowns.brands', { returnObjects: true });
+                Object.entries(brands).forEach(([value, text]) => {
+                    const option = new Option(text, value);
+                    makeSelect.add(option);
+                });
+                
+                // Restore selected value if it still exists
+                if (selectedMake) {
+                    makeSelect.value = selectedMake;
+                }
+            }
+            
+            // Update condition dropdown
+            updateSimpleDropdown('condition', 'form.dropdowns.conditions');
+            
+            // Update transmission dropdown (using 'gear' as the ID)
+            updateSimpleDropdown('gear', 'form.dropdowns.transmissions');
+            
+            // Update fuel type dropdown
+            updateSimpleDropdown('fuel', 'form.dropdowns.fuelTypes');
+        }
+        
+        // Helper function to update simple dropdowns
+        function updateSimpleDropdown(selectId, translationKey) {
+            const select = document.getElementById(selectId);
+            if (!select) return;
+            
+            // Save selected value
+            const selectedValue = select.value;
+            
+            // Clear existing options except the first one
+            while (select.options.length > 1) {
+                select.remove(1);
+            }
+            
+            // Add translated options
+            const items = i18next.t(translationKey, { returnObjects: true });
+            Object.entries(items).forEach(([value, text]) => {
+                const option = new Option(text, value);
+                select.add(option);
+            });
+            
+            // Restore selected value if it still exists
+            if (selectedValue) {
+                select.value = selectedValue;
+            }
+        }
+
         // Update content with translations
         function updateContent() {
             document.querySelectorAll('[data-i18n]').forEach(element => {
@@ -81,6 +178,10 @@
                     element.placeholder = i18next.t(key);
                 }
             });
+
+            // Update dropdowns with translated options
+            updateDropdowns();
+            updateYearDropdown();
 
             // Update page title
             document.title = i18next.t('form.title');
@@ -129,9 +230,12 @@
             </div>
         </div>
 
-        <form name="sell-car" method="POST" netlify enctype="multipart/form-data" action="/success.html">
+        <form name="sell-car" method="POST" netlify enctype="multipart/form-data" action="/success.html" id="car-form">
             <!-- Hidden Netlify Form Name -->
             <input type="hidden" name="form-name" value="sell-car">
+            <!-- Hidden field for Cloudinary URLs -->
+            <input type="hidden" name="vehicle-images" id="vehicle-images" value="">
+
             <!-- Car Details Section -->
             <div class="form-section">
                 <h2><i class="fas fa-car"></i> <span data-i18n="form.sections.vehicle">Vehicle Information</span></h2>
@@ -142,18 +246,7 @@
                     <div class="form-group">
                         <label for="maker" class="required" data-i18n="form.fields.make">Make</label>
                         <select id="maker" name="maker" required>
-                            <option value="">Select Brand</option>
-                            <option value="Toyota">Toyota</option>
-                            <option value="Honda">Honda</option>
-                            <option value="BMW">BMW</option>
-                            <option value="Mercedes">Mercedes</option>
-                            <option value="Audi">Audi</option>
-                            <option value="Ford">Ford</option>
-                            <option value="Volkswagen">Volkswagen</option>
-                            <option value="Hyundai">Hyundai</option>
-                            <option value="Kia">Kia</option>
-                            <option value="Nissan">Nissan</option>
-                            <option value="Other">Other</option>
+                            <option value="" data-i18n="form.dropdowns.selectBrand">Select Brand</option>
                         </select>
                     </div>
 
@@ -165,43 +258,7 @@
                     <div class="form-group">
                         <label for="year" class="required" data-i18n="form.fields.year">Year</label>
                         <select id="year" name="year" required>
-                            <option value="">Select Year</option>
-                            <option value="2025">2025</option>
-                            <option value="2024">2024</option>
-                            <option value="2023">2023</option>
-                            <option value="2022">2022</option>
-                            <option value="2021">2021</option>
-                            <option value="2020">2020</option>
-                            <option value="2019">2019</option>
-                            <option value="2018">2018</option>
-                            <option value="2017">2017</option>
-                            <option value="2016">2016</option>
-                            <option value="2015">2015</option>
-                            <option value="2014">2014</option>
-                            <option value="2013">2013</option>
-                            <option value="2012">2012</option>
-                            <option value="2011">2011</option>
-                            <option value="2010">2010</option>
-                            <option value="2009">2009</option>
-                            <option value="2008">2008</option>
-                            <option value="2007">2007</option>
-                            <option value="2006">2006</option>
-                            <option value="2005">2005</option>
-                            <option value="2004">2004</option>
-                            <option value="2003">2003</option>
-                            <option value="2002">2002</option>
-                            <option value="2001">2001</option>
-                            <option value="2000">2000</option>
-                            <option value="1999">1999</option>
-                            <option value="1998">1998</option>
-                            <option value="1997">1997</option>
-                            <option value="1996">1996</option>
-                            <option value="1995">1995</option>
-                            <option value="1994">1994</option>
-                            <option value="1993">1993</option>
-                            <option value="1992">1992</option>
-                            <option value="1991">1991</option>
-                            <option value="1990">1990</option>
+                            <option value="" data-i18n="form.dropdowns.selectYear">Select Year</option>
                         </select>
                     </div>
 
@@ -220,49 +277,102 @@
                     <div class="form-group">
                         <label for="condition" class="required" data-i18n="form.fields.condition">Condition</label>
                         <select id="condition" name="condition" required>
-                            <option value="">Select Condition</option>
-                            <option value="Excellent">Excellent - Like new</option>
-                            <option value="Good">Good - Minor wear</option>
-                            <option value="Fair">Fair - Some issues</option>
-                            <option value="Poor">Poor - Needs work</option>
+                            <option value="" data-i18n="form.dropdowns.selectCondition">Select Condition</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="expectedPrice" class="required" data-i18n="form.fields.expectedPrice">Expected Price</label>
+                        <label for="expectedPrice" class="required" data-i18n="form.fields.expectedPrice">Expected
+                            Price</label>
                         <div class="input-with-currency">
                             <span class="currency-symbol">€</span>
-                            <input type="number" id="expectedPrice" name="expectedPrice" min="0" step="0.01" placeholder="" data-i18n-placeholder="form.fields.expectedPricePlaceholder" required>
+                            <input type="number" id="expectedPrice" name="expectedPrice" min="0" step="0.01"
+                                placeholder="" data-i18n-placeholder="form.fields.expectedPricePlaceholder" required>
                         </div>
-                        <span class="form-hint" data-i18n="form.fields.expectedPriceHint">This helps us understand your expectations</span>
+                        <span class="form-hint" data-i18n="form.fields.expectedPriceHint">This helps us understand your
+                            expectations</span>
                     </div>
 
                     <div class="form-group">
                         <label for="transmission" class="required"
                             data-i18n="form.fields.transmission">Transmission</label>
                         <select id="gear" name="gear" required>
-                            <option value="">Select</option>
-                            <option value="Automatic">Automatic</option>
-                            <option value="Manual">Manual</option>
-                            <option value="Semi-Automatic">Semi-Automatic</option>
-                            <option value="CVT">CVT</option>
+                            <option value="" data-i18n="form.dropdowns.selectTransmission">Select Transmission</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="fuel" class="required" data-i18n="form.fields.fuel">Fuel Type</label>
                         <select id="fuel" name="fuel" required>
-                            <option value="">Select</option>
-                            <option value="Benzine">Benzine</option>
-                            <option value="Diesel">Diesel</option>
-                            <option value="Electric">Electric</option>
-                            <option value="Hybrid">Hybrid (Benzine/Electric)</option>
-                            <option value="Plug-in Hybrid">Plug-in Hybrid</option>
-                            <option value="LPG">LPG</option>
+                            <option value="" data-i18n="form.dropdowns.selectFuelType">Select Fuel Type</option>
                         </select>
                     </div>
+                </div>
+            </div>
 
+            <!-- Vehicle Photos Section -->
+            <div class="form-section">
+                <h2><i class="fas fa-camera"></i> <span data-i18n="form.sections.photos">Vehicle Photos</span></h2>
+                <p class="section-description" data-i18n="form.sections.photosDescription">Upload clear photos of your
+                    vehicle to get a more accurate valuation. You can upload up to 8 images.</p>
 
+                <div class="file-upload required" id="file-upload-area">
+                    <!-- HIDDEN FILE INPUT - DO NOT MODIFY -->
+                    <input type="file" id="vehicle-photos" accept="image/*" multiple>
+
+                    <!-- UPLOAD INSTRUCTIONS - NO CLICK HANDLER -->
+                    <div class="upload-instructions">
+                        <i class="fas fa-camera"></i>
+                        <div class="upload-text">
+                            <strong data-i18n="form.fields.dragDrop">Click to upload photos or drag and drop</strong>
+                            <span data-i18n="form.fields.browseFiles">PNG, JPG up to 10MB each (max 8 photos)</span>
+                        </div>
+                    </div>
+
+                    <!-- UPLOAD BUTTON - ONLY THIS SHOULD BE CLICKABLE -->
+                    <button type="button" class="upload-btn" id="upload-btn">
+                        <span class="btn-content">
+                            <i class="fas fa-upload"></i>
+                            <span data-i18n="form.fields.selectPhotos">Choose Photos</span>
+                        </span>
+                    </button>
+
+                    <!-- PROGRESS BAR -->
+                    <div class="upload-progress" id="upload-progress">
+                        <div class="upload-progress-bar" id="upload-progress-bar"></div>
+                    </div>
+
+                    <!-- STATUS MESSAGE -->
+                    <div class="upload-status" id="upload-status"></div>
+                </div>
+
+                <!-- FILE PREVIEW AREA -->
+                <div class="file-preview" id="file-preview"></div>
+
+                <!-- UPLOAD SUMMARY -->
+                <div class="upload-summary" id="upload-summary" style="display: none;">
+                    <div class="upload-count">
+                        <i class="fas fa-images"></i>
+                        <span id="image-count" data-i18n="form.fields.noFiles">0 photos uploaded</span>
+                    </div>
+                    <button type="button" class="retry-btn" id="retry-failed" style="display: none;"
+                        data-i18n="form.buttons.retryFailed">
+                        Retry Failed Uploads
+                    </button>
+                </div>
+
+                <!-- Photo Tips -->
+                <div class="photo-tips">
+                    <h4><i class="fas fa-lightbulb"></i> <span data-i18n="form.fields.photoTips">Photo Tips for Best
+                            Results</span></h4>
+                    <ul>
+                        <li data-i18n="form.fields.tips.0">Take photos in good lighting (daylight is best)</li>
+                        <li data-i18n="form.fields.tips.1">Include exterior shots from all angles (front, back, sides)
+                        </li>
+                        <li data-i18n="form.fields.tips.2">Show the interior, including seats and dashboard</li>
+                        <li data-i18n="form.fields.tips.3">Capture any damage or wear clearly</li>
+                        <li data-i18n="form.fields.tips.4">Include photos of the odometer and any special features</li>
+                    </ul>
                 </div>
             </div>
 
@@ -303,8 +413,6 @@
                         </div>
                     </div>
 
-
-
                     <div class="form-group">
                         <label data-i18n="form.fields.contactMethod">Preferred Contact Method</label>
                         <div class="radio-group">
@@ -331,9 +439,8 @@
                         <textarea id="notes" name="notes" rows="4" data-i18n-placeholder="form.fields.notesPlaceholder"
                             placeholder="Tell us about any special features, recent maintenance, or issues with the vehicle..."></textarea>
                     </div>
-
-
                 </div>
+
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary" id="submit-btn"
                         data-i18n="form.buttons.submit">Submit</button>
@@ -341,7 +448,8 @@
 
                 <div class="security-notice">
                     <i class="fas fa-lock"></i>
-                    <span data-i18n="form.securityNotice">Your information is secure and will never be shared with third parties.</span>
+                    <span data-i18n="form.securityNotice">Your information is secure and will never be shared with third
+                        parties.</span>
                 </div>
             </div>
         </form>
