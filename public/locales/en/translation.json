@@ -94,7 +94,8 @@
       "notesPlaceholder": "Tell us about any special features, recent maintenance, or issues with the vehicle..."
     },
     "buttons": {
-      "submit": "Submit"
+      "submit": "Submit",
+      "processing": "Processing..."
     },
     "upload": {
       "maxFilesError": "Maximum {{maxFiles}} photos allowed. You can add {{remaining}} more.",

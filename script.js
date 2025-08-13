@@ -361,7 +361,8 @@ async function handleFormSubmit(e) {
     // Show loading state
     if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>Processing...</span>`;
+        const processingText = i18next.t('form.buttons.processing', { defaultValue: 'Processing...' });
+        submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>${processingText}</span>`;
     }
     
     // Upload images if any are selected

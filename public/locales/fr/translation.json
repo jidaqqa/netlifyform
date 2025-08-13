@@ -95,7 +95,8 @@
     },
     "buttons": {
       "submit": "Soumettre",
-      "retryFailed": "Réessayer les échecs"
+      "retryFailed": "Réessayer les échecs",
+      "processing": "Traitement en cours..."
     },
     "upload": {
       "maxFilesError": "Maximum {{maxFiles}} photos autorisées. Vous pouvez en ajouter {{remaining}} de plus.",

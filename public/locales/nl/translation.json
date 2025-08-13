@@ -102,7 +102,8 @@
     },
     "buttons": {
       "submit": "Verzenden",
-      "retryFailed": "Mislukte Uploads Opnieuw Proberen"
+      "retryFailed": "Mislukte Uploads Opnieuw Proberen",
+      "processing": "Verwerken..."
     },
     "upload": {
       "maxFilesError": "Maximaal {{maxFiles}} foto's toegestaan. U kunt er nog {{remaining}} toevoegen.",
